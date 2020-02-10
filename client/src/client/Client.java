@@ -21,7 +21,6 @@ public class Client {
             String result = server.decryptCardNumber(input);
 
             System.out.printf("The card number %s has decryption number %s%n",input,result);
-
     } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }

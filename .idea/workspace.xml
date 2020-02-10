@@ -95,9 +95,9 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
-  <component name="RunManager" selected="Application.Main (1)">
+  <component name="RunManager" selected="Application.ClientMain">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -137,13 +137,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gui.Main" />
+    <configuration name="ClientLogin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="clientLoginPage.ClientLogin" />
       <module name="client" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="--module-path D:\openjfx-13.0.1_windows-x64_bin-sdk\javafx-sdk-13.0.1\lib --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="gui.*" />
+          <option name="PATTERN" value="clientLoginPage.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="clientMainPage.ClientMain" />
+      <module name="client" />
+      <option name="VM_PARAMETERS" value="--module-path D:\openjfx-13.0.1_windows-x64_bin-sdk\javafx-sdk-13.0.1\lib --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="clientMainPage.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -236,11 +250,13 @@
       <item itemvalue="Application.ServerObjectInterface" />
       <item itemvalue="Application.ServerRMI" />
       <item itemvalue="Application.Client" />
-      <item itemvalue="Application.Main (1)" />
+      <item itemvalue="Application.ClientLogin" />
+      <item itemvalue="Application.ClientMain" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main (1)" />
+        <item itemvalue="Application.ClientMain" />
+        <item itemvalue="Application.ClientLogin" />
         <item itemvalue="Application.Client" />
         <item itemvalue="Application.ServerRMI" />
         <item itemvalue="Application.ServerObjectInterface" />
@@ -272,7 +288,7 @@
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1581342125748" duration="203000" />
       <workItem from="1581342794373" duration="3877000" />
-      <workItem from="1581346732900" duration="6039000" />
+      <workItem from="1581346732900" duration="8452000" />
     </task>
     <servers />
   </component>
@@ -284,38 +300,42 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581345618592">
+    <state x="552" y="178" key="#Notifications" timestamp="1581355909470">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581345618592" />
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1581352739551">
+    <state x="552" y="178" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1581355909470" />
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581356205958">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1581352739551" />
-    <state x="666" y="261" key="FileChooserDialogImpl" timestamp="1581342282786">
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581356205958" />
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1581356008772">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1581342282786" />
-    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1581352809403">
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1581356008772" />
+    <state x="666" y="261" key="FileChooserDialogImpl" timestamp="1581355923886">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581352809403" />
-    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1581352809403">
+    <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1581355923886" />
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1581356210360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581352809403" />
-    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1581352809402">
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581356210360" />
+    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1581356210360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581352809402" />
-    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1581352809403">
+    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581356210360" />
+    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1581356210360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581352809403" />
-    <state x="440" y="94" key="SettingsEditor" timestamp="1581346972310">
+    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581356210360" />
+    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1581356210360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581346972310" />
+    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581356210360" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1581355926655">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581355926655" />
     <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1581346736960">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

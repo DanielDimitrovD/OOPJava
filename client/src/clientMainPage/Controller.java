@@ -1,4 +1,4 @@
-package gui;
+package clientMainPage;
 
 public class Controller {
 }
