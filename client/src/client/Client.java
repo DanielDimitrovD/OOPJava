@@ -1,7 +1,14 @@
 package client;
 
+import clientLoginPage.ClientLogin;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import server.ServerObjectInterface;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -11,19 +18,7 @@ import java.util.Scanner;
 public class Client {
     private static Scanner scanner;
     public static void main(String[] args) {
-        try {
-            scanner = new Scanner(System.in);
-            Registry registry  = LocateRegistry.getRegistry(12345);
-            ServerObjectInterface server = (ServerObjectInterface)registry.lookup("ServerObjectInterfaceImplementation");
 
-            System.out.println("Enter code to decrypt");
-            String input = scanner.next();
-            String result = server.decryptCardNumber(input);
-
-            System.out.printf("The card number %s has decryption number %s%n",input,result);
-    } catch (RemoteException | NotBoundException e) {
-            e.printStackTrace();
-        }
 
     }
 }
