@@ -56,6 +56,7 @@
       <list>
         <option value="module-info" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -96,7 +97,7 @@
     <property name="recentsLimit" value="5" />
     <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.Main (1)">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -129,6 +130,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gui.Main" />
+      <module name="client" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -221,9 +236,11 @@
       <item itemvalue="Application.ServerObjectInterface" />
       <item itemvalue="Application.ServerRMI" />
       <item itemvalue="Application.Client" />
+      <item itemvalue="Application.Main (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Client" />
         <item itemvalue="Application.ServerRMI" />
         <item itemvalue="Application.ServerObjectInterface" />
@@ -255,7 +272,7 @@
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1581342125748" duration="203000" />
       <workItem from="1581342794373" duration="3877000" />
-      <workItem from="1581346732900" duration="1969000" />
+      <workItem from="1581346732900" duration="6039000" />
     </task>
     <servers />
   </component>
@@ -271,30 +288,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581345618592" />
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1581343428643">
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1581352739551">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1581343428643" />
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1581352739551" />
     <state x="666" y="261" key="FileChooserDialogImpl" timestamp="1581342282786">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1581342282786" />
-    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1581348483169">
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1581352809403">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581348483169" />
-    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1581348483169">
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581352809403" />
+    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1581352809403">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581348483169" />
-    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1581348483169">
+    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581352809403" />
+    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1581352809402">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581348483169" />
-    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1581348483169">
+    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581352809402" />
+    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1581352809403">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581348483169" />
+    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581352809403" />
     <state x="440" y="94" key="SettingsEditor" timestamp="1581346972310">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

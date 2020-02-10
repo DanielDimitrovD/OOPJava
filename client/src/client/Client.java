@@ -16,9 +16,9 @@ public class Client {
             Registry registry  = LocateRegistry.getRegistry(12345);
             ServerObjectInterface server = (ServerObjectInterface)registry.lookup("ServerObjectInterfaceImplementation");
 
-            System.out.println("Enter code to encrypt");
+            System.out.println("Enter code to decrypt");
             String input = scanner.next();
-            String result = server.encryptCardNumber(input);
+            String result = server.decryptCardNumber(input);
 
             System.out.printf("The card number %s has decryption number %s%n",input,result);
 
