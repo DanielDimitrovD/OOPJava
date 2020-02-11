@@ -5,8 +5,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 public class ServerObjectInterfaceImplementation extends UnicastRemoteObject implements ServerObjectInterface  {
-
-    private Map<String,String> data; // user data
     private StringBuilder sb; // used to build result of encrypted card number
     private int offset; // define offset of algorithm
     public ServerObjectInterfaceImplementation() throws RemoteException {

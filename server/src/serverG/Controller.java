@@ -1,11 +1,14 @@
 package serverG;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
-import java.rmi.RemoteException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Formatter;
 import java.util.ResourceBundle;
 
+import com.sun.glass.ui.Pixels;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import javafx.collections.FXCollections;
@@ -13,9 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
 import server.Privileges;
-import server.User;
 
 public class Controller {
 
@@ -79,7 +80,7 @@ public class Controller {
 
     @FXML
     // add account to database in server side
-    void btnAddAccountClicked(ActionEvent event) {
+    void btnAddAccountClicked(ActionEvent event) throws IOException {
         String username = txtUsername.getText();  // get username from form
         String password = txtPassword.getText(); // get password from form
         Privileges privilege = cmbPrivilege.getValue(); // get privilege from form
@@ -93,35 +94,48 @@ public class Controller {
             txtUsername.requestFocus(); // request focus on username textField
         }
         else {  // input is valid
-            User user = new User(username,password,privilege); // create// a user instance
 
             XStream xStream = new XStream(new DomDriver()); // initialize xstream object
-            xStream.alias("Username",User.class);
+            xStream.alias("Users",Users.class);  // create alias for Users class
+            xStream.alias("user",User.class); // create alias for User class
+            xStream.addImplicitCollection(Users.class,"users");
 
-            String xml = xStream.toXML(user);
+            User user = new User(username,password,privilege); // create a user instance
 
-            FileChooser fc = new FileChooser(); // create a file chooser
-            Formatter formatter;
+            Path path = Paths.get("data.xml");
+            if(!Files.exists(path)) {              // creating file for first time
+                Files.createFile(Paths.get("data.xml"));
+                try( Formatter writer = new Formatter(new FileWriter("./data.xml"))){
+                    writer.flush(); // flush writer
+                    Users users = new Users(); // create Users class
+                    users.addUser(user); // add user to Users class
 
-            try {
-                File f = fc.showOpenDialog(null);
-                formatter = new Formatter(f);
-                formatter.format("%s",xml);
-
-                showMessage(Alert.AlertType.INFORMATION,"Adding account to server","Account added successfully",
-                        "");
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                    String xml = xStream.toXML(users); // serialize object
+                    writer.format("%s",xml); // write xml to the file
+                }
             }
+
+            else {  // data file exists
+
+                FileReader reader = new FileReader("./data.xml"); // open data file to read from
+                Users users = (Users)xStream.fromXML(reader); // deserialize Users class
+                users.addUser(user); // add user to the Users class
+
+                if(reader != null)
+                    reader.close();
+
+                try(BufferedWriter writer = new BufferedWriter(new FileWriter("./data.xml"))){
+                    //writer.flush(); // flush writer
+                    String xml = xStream.toXML(users); // serialize object
+                    writer.write(xml); // write to file
+                }
+            }
+            showMessage(Alert.AlertType.INFORMATION,"Adding account to server","Account added successfully","");
         }
-
-
     }
 
-
     @FXML
-    void initialize() {
+    void initialize() throws IOException {
         ObservableList<Privileges> options = FXCollections.observableArrayList(
                 Privileges.NONE,Privileges.ENCRYPT,Privileges.DECRYPT,Privileges.BOTH
         );

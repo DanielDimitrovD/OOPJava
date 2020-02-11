@@ -1,4 +1,6 @@
-package server;
+package serverG;
+
+import server.Privileges;
 
 import java.io.Serializable;
 
