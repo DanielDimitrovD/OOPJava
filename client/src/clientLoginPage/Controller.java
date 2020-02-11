@@ -25,8 +25,8 @@ import javafx.stage.Stage;
 import server.ServerObjectInterface;
 
 public class Controller {
-    Registry registry  = LocateRegistry.getRegistry(12345);
-    ServerObjectInterface server = (ServerObjectInterface)registry.lookup("ServerObjectInterfaceImplementation");
+    Registry registry  = LocateRegistry.getRegistry(12345); // get registry
+    ServerObjectInterface server = (ServerObjectInterface)registry.lookup("ServerObjectInterfaceImplementation"); // get server object
 
     @FXML
     private ResourceBundle resources;
@@ -39,6 +39,12 @@ public class Controller {
 
     @FXML
     private Label lblTitle;
+
+    @FXML
+    private Label lblUsername;
+
+    @FXML
+    private Label lblPassword;
 
     @FXML
     private TextField txtUsername;
@@ -60,8 +66,10 @@ public class Controller {
            return;
 
        if(server.validateUser(username, password)){
-           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-           alert.setContentText("Chestito mina");
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setTitle("Login panel");
+           alert.setHeaderText("Login in system successful!");
+           alert.setContentText("Redirecting to main page.");
            alert.showAndWait();
 
            Parent root = FXMLLoader.load(getClass().getResource("../clientMainPage/sample.fxml"));
@@ -89,6 +97,5 @@ public class Controller {
         assert txtUsername != null : "fx:id=\"txtUsername\" was not injected: check your FXML file 'sample.fxml'.";
         assert btnLogin != null : "fx:id=\"btnLogin\" was not injected: check your FXML file 'sample.fxml'.";
         assert imgTitle != null : "fx:id=\"imgTitle\" was not injected: check your FXML file 'sample.fxml'.";
-
     }
 }

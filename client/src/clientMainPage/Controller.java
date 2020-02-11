@@ -7,9 +7,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
+import com.sun.webkit.network.Util;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -35,6 +37,9 @@ public class Controller {
     private Label lblEncrypt;
 
     @FXML
+    private Label lblResults;
+
+    @FXML
     private Label lblDercypt;
 
     @FXML
@@ -46,25 +51,61 @@ public class Controller {
     @FXML
     private TextField txtDecrypt;
 
+    @FXML
+    private TextField txtResults;
+
     public Controller() throws RemoteException, NotBoundException {
+    }
+
+    // method to create an alert with type,title,headerText,contextText for reuse
+    private void showMessage(Alert.AlertType type,String title,String headerText,String contextText) throws RemoteException {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contextText);
+        alert.showAndWait();
     }
 
     @FXML
     void btnDecryptClicked(ActionEvent event) throws RemoteException {
-
+        String decryptionInput = Utilities.removeWhiteSpaces(txtDecrypt.getText()); // remove whitespaces from input
+        txtEncrypt.setText(""); // clear encryption textField
+        if(!Utilities.verifyDecryptNumber(decryptionInput)) {// input is invalid ( !16 digits)
+            showMessage(Alert.AlertType.WARNING,"Decryption of card number","Card number for decryption is INVALID!",
+                    "Enter card number for decryption again.");
+            txtDecrypt.setText(""); // clear decryption textField
+            txtResults.setText(""); // clear results textField
+            txtDecrypt.requestFocus(); // request focus on decryption text field
+        }
+        else {   // input is valid ( 16 digits)
+            txtResults.setText(server.decryptCardNumber(decryptionInput)); // set results textField to decrypted card number
+            showMessage(Alert.AlertType.INFORMATION,"Decryption of card number","Decryption of card number successful",
+                    "Results are shown in the Results text field.");
+            txtResults.requestFocus(); // request focus on results textField
+        }
     }
 
     @FXML
     void btnEncryptClicked(ActionEvent event) throws RemoteException {
-        String encryptedText = txtEncrypt.getText().trim();
-        if( encryptedText.length() != 0)
-            txtDecrypt.setText(server.encryptCardNumber(encryptedText));
-        else
-            txtDecrypt.setText("Wrong number");
+        String encryptionInput = Utilities.removeWhiteSpaces(txtEncrypt.getText()); // remove whitespaces from input
+        txtDecrypt.setText(""); // clear decryption textField
+        if( !Utilities.verifyCardNumber(encryptionInput) || !Utilities.verifyLuhn(encryptionInput)){  // invalid card number
+              showMessage(Alert.AlertType.WARNING,"Encryption of car number","Card number for encryption is INVALID!",
+                      "Enter card number for encryption again.");
+              txtEncrypt.setText(""); // clear encryption textField
+              txtResults.setText(""); // clear results textField
+              txtEncrypt.requestFocus(); // request focus on encryption text field
+        }
+        else {  // card number is valid
+            txtResults.setText(server.encryptCardNumber(encryptionInput));  // set result text field to encrypted card number
+            showMessage(Alert.AlertType.INFORMATION,"Encryption of card number","Encryption of card number successful!",
+                   "Results are shown in the Results text field.");
+           txtResults.requestFocus(); // request focus on the result textField
+        }
     }
-
     @FXML
-    void btnQuitClicked(ActionEvent event) {
+    void btnQuitClicked(ActionEvent event) throws RemoteException {
+        showMessage(Alert.AlertType.INFORMATION,"Client main page","Exiting the system","");
         Platform.exit();
     }
 

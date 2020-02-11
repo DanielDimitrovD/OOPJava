@@ -1,5 +1,5 @@
 package server;
 
 public enum Privileges {
-    NONE,FULL;
+    NONE,ENCRYPT,DECRYPT,BOTH;
 }
