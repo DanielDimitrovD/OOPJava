@@ -1,4 +1,4 @@
-package clientMainPage;
+/*package clientMainPage;
 
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -7,7 +7,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
-import com.sun.webkit.network.Util;
+import clientLoginPage.Utilities;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +18,6 @@ import javafx.scene.control.TextField;
 import server.ServerObjectInterface;
 
 public class Controller {
-
     Registry registry  = LocateRegistry.getRegistry(12345);
     ServerObjectInterface server = (ServerObjectInterface)registry.lookup("ServerObjectInterfaceImplementation");
     @FXML
@@ -121,3 +120,4 @@ public class Controller {
 
     }
 }
+*/

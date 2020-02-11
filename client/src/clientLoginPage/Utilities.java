@@ -1,4 +1,4 @@
-package clientMainPage;
+package clientLoginPage;
 
 public class Utilities {
     static boolean verifyCardNumber(String cardNumber) {   // verify encryption input
