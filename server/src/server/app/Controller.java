@@ -1,4 +1,4 @@
-package serverG;
+package server.app;
 
 import java.io.*;
 import java.net.URL;
@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.util.Formatter;
 import java.util.ResourceBundle;
 
-import com.sun.glass.ui.Pixels;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import javafx.collections.FXCollections;
@@ -16,7 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import server.Privileges;
+import serverDefinitions.Privileges;
 
 public class Controller {
 

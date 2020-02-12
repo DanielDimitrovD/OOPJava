@@ -1,17 +1,16 @@
-package server;
+package serverDefinitions;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
-import serverG.User;
-import serverG.Users;
+import server.app.User;
+import server.app.Users;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class Test {
+public class TestClass {
     public static void main(String[] args) throws FileNotFoundException {
 
         HashMap<String, String> userCredetentials = new HashMap<>();

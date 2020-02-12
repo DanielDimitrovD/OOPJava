@@ -125,7 +125,7 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
-    <configuration name="ClientLogin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientLogin" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="clientLoginPage.ClientLogin" />
       <module name="client" />
       <option name="VM_PARAMETERS" value="--module-path D:\openjfx-13.0.1_windows-x64_bin-sdk\javafx-sdk-13.0.1\lib --add-modules javafx.controls,javafx.fxml" />
@@ -156,7 +156,7 @@
       </method>
     </configuration>
     <configuration name="ServerRMI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="server.ServerRMI" />
+      <option name="MAIN_CLASS_NAME" value="serverDefinitions.ServerRMI" />
       <module name="server" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -169,13 +169,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="server.Test" />
+    <configuration name="TestClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="serverDefinitions.TestClass" />
       <module name="server" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="server.*" />
+          <option name="PATTERN" value="serverDefinitions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -249,17 +249,18 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.Main" />
       <item itemvalue="Application.ServerRMI" />
       <item itemvalue="Application.ClientLogin" />
       <item itemvalue="Application.serverMainPage" />
       <item itemvalue="Application.serverGMain" />
-      <item itemvalue="Application.Test" />
+      <item itemvalue="Application.TestClass" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ClientLogin" />
-        <item itemvalue="Application.Test" />
         <item itemvalue="Application.ServerRMI" />
+        <item itemvalue="Application.TestClass" />
         <item itemvalue="Application.serverGMain" />
         <item itemvalue="Application.serverMainPage" />
       </list>
@@ -292,6 +293,7 @@
       <workItem from="1581342794373" duration="3877000" />
       <workItem from="1581346732900" duration="18900000" />
       <workItem from="1581407769434" duration="35056000" />
+      <workItem from="1581494061436" duration="7784000" />
     </task>
     <servers />
   </component>
@@ -307,10 +309,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="178" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1581355909470" />
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581422829977">
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581497281226">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581422829977" />
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581497281226" />
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1581432752242">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -319,22 +321,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1581428128456" />
-    <state width="1860" height="281" key="GridCell.Tab.0.bottom" timestamp="1581449352045">
+    <state width="1860" height="281" key="GridCell.Tab.0.bottom" timestamp="1581504657273">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581449352045" />
-    <state width="1860" height="281" key="GridCell.Tab.0.center" timestamp="1581449352045">
+    <state width="1860" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581504657273" />
+    <state width="1860" height="281" key="GridCell.Tab.0.center" timestamp="1581504657272">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581449352045" />
-    <state width="1860" height="281" key="GridCell.Tab.0.left" timestamp="1581449352045">
+    <state width="1860" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581504657272" />
+    <state width="1860" height="281" key="GridCell.Tab.0.left" timestamp="1581504657272">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581449352045" />
-    <state width="1860" height="281" key="GridCell.Tab.0.right" timestamp="1581449352045">
+    <state width="1860" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581504657272" />
+    <state width="1860" height="281" key="GridCell.Tab.0.right" timestamp="1581504657273">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581449352045" />
+    <state width="1860" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581504657273" />
     <state width="1860" height="344" key="GridCell.Tab.1.bottom" timestamp="1581443119834">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -359,10 +361,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="776" y="297" key="chooseDestDirectoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581357112858" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1581407947798">
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1581494069184">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581407947798" />
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581494069184" />
     <state x="864" y="315" key="extract.method.dialog" timestamp="1581411161265">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -371,13 +373,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="342" y="140" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1581342195081" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1581440861151">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1581496519851">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1581440861151" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1581430288377">
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1581496519851" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1581496560376">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1581430288377" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1581496560376" />
   </component>
 </project>

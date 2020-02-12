@@ -10,7 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import server.ServerObjectInterface;
+import serverDefinitions.ServerObjectInterface;
 
 public class Controller {
     Registry registry  = LocateRegistry.getRegistry(12345); // get registry
@@ -20,11 +20,13 @@ public class Controller {
     private TabPane tpaneMenu;
 
     @FXML
-    private TextField txtPassword;
+    private PasswordField txtPassword;
 
     @FXML
     private Label lblTitle;
 
+    @FXML
+    private Label lblOperationsUsername;
     @FXML
     private TextField txtUsername;
 
@@ -93,6 +95,7 @@ public class Controller {
                    "on Operations tab enabled.");
 
            tabOperations.setDisable(false); // enable tab Operations
+           lblOperationsUsername.setText(txtUsername.getText()); // set Username on Operations tab
            tpaneMenu.getTabs().remove(0); // remove login tab
        }
        else{
@@ -121,10 +124,20 @@ public class Controller {
             txtDecrypt.requestFocus(); // request focus on decryption text field
         }
         else {   // input is valid ( 16 digits)
-            txtResults.setText(server.decryptCardNumber(decryptionInput)); // set results textField to decrypted card number
-            showMessage(Alert.AlertType.INFORMATION,"Decryption of card number","Decryption of card number successful",
-                    "Results are shown in the Results text field.");
-            txtResults.requestFocus(); // request focus on results textField
+            String result = server.decryptCardNumber(txtUsername.getText(),decryptionInput); // request for RMI method
+            if( result != null) { // user has decryption functionality
+                showMessage(Alert.AlertType.INFORMATION,"Decryption of card number","Decryption of card number successful",
+                        "Results are shown in the Results text field.");
+                txtResults.setText(result); // set Result textField
+                txtResults.requestFocus(); // request focus on results textField
+            }
+            else{ // user has no decryption functionality
+                txtEncrypt.setText(""); // clear encryption textField
+                txtDecrypt.setText(""); // clear decryption textField
+                txtResults.setText(""); // clear result textField
+                showMessage(Alert.AlertType.WARNING,"Decryption of card number","Decryption of card number unsuccessful",
+                        String.format("User:[%s] has no rights to use decryption functionality",txtUsername.getText()));
+            }
         }
     }
 
@@ -140,10 +153,20 @@ public class Controller {
             txtEncrypt.requestFocus(); // request focus on encryption text field
         }
         else {  // card number is valid
-            txtResults.setText(server.encryptCardNumber(encryptionInput));  // set result text field to encrypted card number
-            showMessage(Alert.AlertType.INFORMATION,"Encryption of card number","Encryption of card number successful!",
-                    "Results are shown in the Results text field.");
-            txtResults.requestFocus(); // request focus on the result textField
+            String result = server.encryptCardNumber(txtUsername.getText(),encryptionInput); // request for RMI method
+            if ( result != null){  // if user has privileges to use encryption method of RMI
+                txtResults.setText(result); // set Results textField
+                showMessage(Alert.AlertType.INFORMATION,"Encryption of card number","Encryption of card number successful!",
+                        "Results are shown in the Results text field.");
+                txtResults.requestFocus(); // request focus on the result textField
+            }
+            else{  // user has no rights to use encryption method of RMI
+                txtEncrypt.setText(""); // clear encryption text
+                txtDecrypt.setText(""); // clear decryption text
+                txtResults.setText(""); // clear result textField
+                showMessage(Alert.AlertType.WARNING,"Encryption of card number","Encryption of card number unsuccessful",
+                        String.format("User:[%s] has no rights to use encryption functionality",txtUsername.getText()));
+            }
         }
     }
     @FXML

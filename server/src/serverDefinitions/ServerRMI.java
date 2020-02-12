@@ -1,4 +1,4 @@
-package server;
+package serverDefinitions;
 
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;

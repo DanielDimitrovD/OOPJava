@@ -1,18 +1,22 @@
 package clientLoginPage;
 
 public class Utilities {
+
+    // verify username format
+    static boolean verifyUsername(String username) {  return  username.matches("^\\a+\\d+$");}
+    // verify card number format
     static boolean verifyCardNumber(String cardNumber) {   // verify encryption input
         return cardNumber.matches("^[3-6]\\d{15}$");
     }
-
+    // verify card number format
     static boolean verifyDecryptNumber( String cardNumber) { // verify decryption input
         return cardNumber.matches("^\\d{16}$");
     }
-
+    // remove whitespaces from card number
     static String  removeWhiteSpaces( String cardNumber) {  // removes whitespaces from card number
         return  cardNumber.replaceAll("\\s+","");
     }
-
+    // verify card number validity by Luhn Algorithm
     static boolean verifyLuhn(String cardNumber) {
 
         int sum = 0;  // accumulator
