@@ -2,8 +2,6 @@ package serverDefinitions;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
-import server.app.User;
-import server.app.Users;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

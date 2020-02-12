@@ -2,12 +2,13 @@ package serverDefinitions;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import server.app.User;
-import server.app.Users;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -18,32 +19,44 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     private Map<String,User> userCredentials; // store username and password
     private StringBuilder sb; // used to build result of encrypted card number
     private int offset; // define offset of algorithm
-    public ServerObjectInterfaceImplementation() throws RemoteException {
+    private String pathToCredentialsFile; // path to XML file with information about users
+    public ServerObjectInterfaceImplementation() throws RemoteException,IOException {
         sb = new StringBuilder();
         offset = 5;
+        pathToCredentialsFile = "D:\\encryptionProject\\server\\src\\serverData\\data.xml";
+        userCredentials = new HashMap<>();
         initializeMap();
     }
 
     // initialize userCredentials
-    private void initializeMap() throws RemoteException{
+    private void initializeMap() throws IOException,RemoteException {
         userCredentials = new HashMap<>();
 
-        try( FileReader reader = new FileReader("data.xml")){ // read from file
-            XStream stream = new XStream(new DomDriver());  // initialize Xstream
-            stream.alias("Users",Users.class);  // create alias for Users class
-            stream.alias("user",User.class); // create alias for User class
-            stream.addImplicitCollection(Users.class,"users");
+        Path path = Paths.get(pathToCredentialsFile); // get file Path
+        if (Files.notExists(path)) { // if file doesn't exist create it
+            Files.createFile(path);
+            return;
+        }
+        else if ( Files.size(Paths.get(pathToCredentialsFile)) == 0){
+            return; // if file is created but doesn't have anything written to it do nothing
+        }
+        else {  // file exists and has data written to it
+              try (FileReader reader = new FileReader(pathToCredentialsFile)) { // read from file
+                  XStream stream = new XStream(new DomDriver());  // initialize Xstream
+                  stream.alias("Users", Users.class);  // create alias for Users class
+                  stream.alias("User", User.class); // create alias for User class
+                  stream.addImplicitCollection(Users.class, "users");
 
-            Users data = (Users)stream.fromXML(reader);  // serialize XML to Users class
+                  Users data = (Users) stream.fromXML(reader);  // serialize XML to Users class
 
-            userCredentials = new HashMap<>();
-            for( User i : data.getUsers()){    // fill HashMap with User values
-                userCredentials.put(i.getUsername(), new User(i.getUsername(),i.getPassword(),i.getPrivileges()));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+                  for (User i : data.getUsers()) {    // fill HashMap with User values
+                      userCredentials.put(i.getUsername(), new User(i.getUsername(), i.getPassword(), i.getPrivileges()));
+                  }
+              } catch (FileNotFoundException e) {
+                  e.printStackTrace();
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
         }
     }
 

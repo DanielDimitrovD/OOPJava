@@ -16,8 +16,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import serverDefinitions.Privileges;
+import serverDefinitions.User;
+import serverDefinitions.Users;
 
 public class Controller {
+
+    private String pathToCredentials; // path to XML file with user data
+    private boolean isEmpty;  // if XML file is empty
 
     @FXML
     private ResourceBundle resources;
@@ -77,6 +82,40 @@ public class Controller {
         alert.showAndWait();
     }
 
+    // initialize XStream options
+    private void initXStream(XStream stream){
+        stream.alias("Users",Users.class); // create alias to Users class
+        stream.alias("User",User.class); // create alias to User class
+        stream.addImplicitCollection(Users.class,"users"); // set Users as root tag
+    }
+
+    // method to write xml to file
+    private void writeInXML(File f,Users users){
+        XStream stream = new XStream(new DomDriver()); // create Xstream object
+        initXStream(stream); // initialize XStream options
+
+        String process = stream.toXML(users); // convert data to XML format
+
+        try(Formatter writer = new Formatter(new FileWriter(f))){
+            writer.flush(); // flush writer
+            writer.format("%s",process); // write data to file
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    // method to read XML from file
+    private Users readFromXML(File f) throws IOException {
+        XStream xStream = new XStream(new DomDriver()); // initialize xstream object
+        initXStream(xStream); // initialize xStream options
+
+        FileReader reader = new FileReader(f);
+        Users result = (Users)xStream.fromXML(reader); // deserialize from XML to Users class
+
+        if(reader !=null) // close reader
+            reader.close();
+        return result;
+    }
+
     @FXML
     // add account to database in server side
     void btnAddAccountClicked(ActionEvent event) throws IOException {
@@ -94,40 +133,45 @@ public class Controller {
         }
         else {  // input is valid
 
-            XStream xStream = new XStream(new DomDriver()); // initialize xstream object
-            xStream.alias("Users",Users.class);  // create alias for Users class
-            xStream.alias("user",User.class); // create alias for User class
+         /*   XStream xStream = new XStream(new DomDriver()); // initialize xstream object
+            xStream.alias("Users", Users.class);  // create alias for Users class
+            xStream.alias("user", User.class); // create alias for User class
             xStream.addImplicitCollection(Users.class,"users");
-
-            User user = new User(username,password,privilege); // create a user instance
-
-            Path path = Paths.get("data.xml");
-            if(!Files.exists(path)) {              // creating file for first time
-                Files.createFile(Paths.get("data.xml"));
-                try( Formatter writer = new Formatter(new FileWriter("./data.xml"))){
+        */
+           /*     try( Formatter writer = new Formatter(new FileWriter("serverData/data.xml"))){
                     writer.flush(); // flush writer
                     Users users = new Users(); // create Users class
                     users.addUser(user); // add user to Users class
 
                     String xml = xStream.toXML(users); // serialize object
                     writer.format("%s",xml); // write xml to the file
-                }
+             */
+
+            User user = new User(username,password,privilege); // create a user instance
+
+            if(isEmpty) {  // file is empty, only write in file
+
+                Users users = new Users(); // create Users instance
+                users.addUser(user); // add User to empty Users list
+                writeInXML(new File(pathToCredentials),users); // serialize Users class in XML in file
             }
 
-            else {  // data file exists
+            else {  // file is not empty, have to read from it first
 
-                FileReader reader = new FileReader("./data.xml"); // open data file to read from
+                Users users = readFromXML(new File(pathToCredentials)); // read from XML and convert to Users class
+                users.addUser(user); // add user to Users class
+                writeInXML(new File(pathToCredentials),users); // write back to XML file
+
+      /*          FileReader reader = new FileReader("serverData/data.xml"); // open data file to read from
                 Users users = (Users)xStream.fromXML(reader); // deserialize Users class
                 users.addUser(user); // add user to the Users class
 
-                if(reader != null)
-                    reader.close();
 
                 try(BufferedWriter writer = new BufferedWriter(new FileWriter("./data.xml"))){
                     //writer.flush(); // flush writer
                     String xml = xStream.toXML(users); // serialize object
                     writer.write(xml); // write to file
-                }
+                }*/
             }
             showMessage(Alert.AlertType.INFORMATION,"Adding account to server","Account added successfully","");
         }
@@ -138,7 +182,8 @@ public class Controller {
         ObservableList<Privileges> options = FXCollections.observableArrayList(
                 Privileges.NONE,Privileges.ENCRYPT,Privileges.DECRYPT,Privileges.BOTH
         );
-
+        pathToCredentials = "D:\\encryptionProject\\server\\src\\serverData\\data.xml";
+        isEmpty = ( Files.size(Paths.get(pathToCredentials)) == 0); // check if file is empty
         assert lblAccountInfo != null : "fx:id=\"lblAccountInfo\" was not injected: check your FXML file 'sample.fxml'.";
         assert lblUsername != null : "fx:id=\"lblUsername\" was not injected: check your FXML file 'sample.fxml'.";
         assert lblPassword != null : "fx:id=\"lblPassword\" was not injected: check your FXML file 'sample.fxml'.";

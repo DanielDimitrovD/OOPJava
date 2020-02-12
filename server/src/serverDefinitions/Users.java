@@ -1,4 +1,4 @@
-package server.app;
+package serverDefinitions;
 
 import java.io.Serializable;
 import java.util.ArrayList;

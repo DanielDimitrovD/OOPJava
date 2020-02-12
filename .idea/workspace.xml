@@ -93,11 +93,19 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../xstream-distribution-1.4.11.1-bin/xstream-1.4.11.1/lib" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\encryptionProject\server" />
+      <recent name="D:\encryptionProject\server\src" />
+      <recent name="D:\encryptionProject\server\src\serverData" />
+      <recent name="D:\encryptionProject\server\src\server\app" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.ClientLogin">
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -155,6 +163,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.app.Server" />
+      <module name="server" />
+      <option name="VM_PARAMETERS" value="--module-path D:\openjfx-13.0.1_windows-x64_bin-sdk\javafx-sdk-13.0.1\lib --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServerRMI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="serverDefinitions.ServerRMI" />
       <module name="server" />
@@ -203,20 +225,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="serverMainPage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="serverGUI.serverMainPage" />
-      <module name="server" />
-      <option name="VM_PARAMETERS" value="--module-path D:\openjfx-13.0.1_windows-x64_bin-sdk\javafx-sdk-13.0.1\lib --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="serverGUI.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -252,17 +260,17 @@
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.ServerRMI" />
       <item itemvalue="Application.ClientLogin" />
-      <item itemvalue="Application.serverMainPage" />
       <item itemvalue="Application.serverGMain" />
       <item itemvalue="Application.TestClass" />
+      <item itemvalue="Application.Server" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ClientLogin" />
+        <item itemvalue="Application.Server" />
         <item itemvalue="Application.ServerRMI" />
         <item itemvalue="Application.TestClass" />
         <item itemvalue="Application.serverGMain" />
-        <item itemvalue="Application.serverMainPage" />
       </list>
     </recent_temporary>
   </component>
@@ -293,7 +301,7 @@
       <workItem from="1581342794373" duration="3877000" />
       <workItem from="1581346732900" duration="18900000" />
       <workItem from="1581407769434" duration="35056000" />
-      <workItem from="1581494061436" duration="7784000" />
+      <workItem from="1581494061436" duration="18633000" />
     </task>
     <servers />
   </component>
@@ -309,10 +317,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="178" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1581355909470" />
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581497281226">
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581504837070">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581497281226" />
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581504837070" />
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1581432752242">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -321,42 +329,42 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1581428128456" />
-    <state width="1860" height="281" key="GridCell.Tab.0.bottom" timestamp="1581504657273">
+    <state width="1860" height="281" key="GridCell.Tab.0.bottom" timestamp="1581517350326">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581504657273" />
-    <state width="1860" height="281" key="GridCell.Tab.0.center" timestamp="1581504657272">
+    <state width="1860" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581517350326" />
+    <state width="1860" height="281" key="GridCell.Tab.0.center" timestamp="1581517350326">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581504657272" />
-    <state width="1860" height="281" key="GridCell.Tab.0.left" timestamp="1581504657272">
+    <state width="1860" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581517350326" />
+    <state width="1860" height="281" key="GridCell.Tab.0.left" timestamp="1581517350326">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581504657272" />
-    <state width="1860" height="281" key="GridCell.Tab.0.right" timestamp="1581504657273">
+    <state width="1860" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581517350326" />
+    <state width="1860" height="281" key="GridCell.Tab.0.right" timestamp="1581517350326">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581504657273" />
-    <state width="1860" height="344" key="GridCell.Tab.1.bottom" timestamp="1581443119834">
+    <state width="1860" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581517350326" />
+    <state width="1860" height="344" key="GridCell.Tab.1.bottom" timestamp="1581513456435">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="344" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581443119834" />
-    <state width="1860" height="344" key="GridCell.Tab.1.center" timestamp="1581443119834">
+    <state width="1860" height="344" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581513456435" />
+    <state width="1860" height="344" key="GridCell.Tab.1.center" timestamp="1581513456434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="344" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581443119834" />
-    <state width="1860" height="344" key="GridCell.Tab.1.left" timestamp="1581443119834">
+    <state width="1860" height="344" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581513456434" />
+    <state width="1860" height="344" key="GridCell.Tab.1.left" timestamp="1581513456434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="344" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581443119834" />
-    <state width="1860" height="344" key="GridCell.Tab.1.right" timestamp="1581443119834">
+    <state width="1860" height="344" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581513456434" />
+    <state width="1860" height="344" key="GridCell.Tab.1.right" timestamp="1581513456434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="344" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581443119834" />
-    <state x="440" y="94" key="SettingsEditor" timestamp="1581428149533">
+    <state width="1860" height="344" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581513456434" />
+    <state x="626" y="125" key="SettingsEditor" timestamp="1581512111624">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581428149533" />
+    <state x="626" y="125" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581512111624" />
     <state x="776" y="297" key="chooseDestDirectoryDialog" timestamp="1581357112858">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -373,10 +381,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="342" y="140" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1581342195081" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1581496519851">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1581506881052">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1581496519851" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1581506881052" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1581496560376">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
