@@ -1,11 +1,15 @@
 package clientLoginPage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Scanner;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -175,6 +179,7 @@ public class Controller {
         showMessage(Alert.AlertType.INFORMATION,"Client main page","Exiting the system","");
         Platform.exit();
     }
+
 
     @FXML
     void initialize() {

@@ -9,8 +9,10 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import Utilities.Utils;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +20,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import serverRMIDefinitions.*;
 import userPackage.Privileges;
+
+import static Utilities.Utils.showMessage;
 
 public class Controller {
 
@@ -98,16 +102,41 @@ public class Controller {
             txtUsername.setText(""); // clear username textField
             txtPassword.setText(""); // clear password textField
             cmbPrivilege.getSelectionModel().selectFirst(); // clear combobox options
-            Utils.showMessage(Alert.AlertType.WARNING, "Adding account to server", "Invalid information entered",
+            showMessage(Alert.AlertType.WARNING, "Adding account to server", "Invalid information entered",
                     "Please enter the form again.");
             txtUsername.requestFocus(); // request focus on username textField
         } else {  // input is valid
 
                 serverObjectInterface.addUser(txtUsername.getText(), txtPassword.getText(), cmbPrivilege.getValue()); // add user to database
-                Utils.showMessage(Alert.AlertType.INFORMATION, "Adding account to server", "Account added successfully",
+                showMessage(Alert.AlertType.INFORMATION, "Adding account to server", "Account added successfully",
                         String.format("Username: {%s}%nPassword: {%s}%nPrivileges: {%s}%n",username,password,privilege));
             }
     }
+
+    @FXML
+    void btnOpenByCardClicked( ActionEvent event) throws RemoteException {
+        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
+        sb.append("Reading data from file sorted by Bank Card Numbers\n");
+
+        File f = new File("sortedByCardNumber.txt");
+
+        try (Scanner scanner = new Scanner(f)) {
+            while (scanner.hasNext()) {
+                sb.append(String.format("%s  %s%n", scanner.next(),scanner.next()));
+            }
+        } catch (FileNotFoundException e) {
+            showMessage(Alert.AlertType.ERROR, "Table view of file", "No file found.",
+                    "Check file configurations.");
+        }
+        Platform.runLater( ()-> txaLog.setText(sb.toString()));
+    }
+
+    @FXML
+    void btnOpenByEncryptionClicked(ActionEvent event) {
+
+    }
+
     @FXML
     void initialize() throws IOException, NotBoundException, RemoteException {
         ObservableList<Privileges> options = FXCollections.observableArrayList(

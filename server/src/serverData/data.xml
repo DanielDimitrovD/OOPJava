@@ -19,4 +19,9 @@
     <password>asd1</password>
     <privileges>USER</privileges>
   </User>
+  <User>
+    <username>viki123</username>
+    <password>v123</password>
+    <privileges>GUEST</privileges>
+  </User>
 </Users>
