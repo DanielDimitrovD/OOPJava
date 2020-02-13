@@ -60,9 +60,22 @@ public class BankCardByCardNumberStream {
 
     // read data from file and return it's String representation
     public String readFromFile(){
-
-        return null;
+        sb.setLength(0); // clear sb
+        // try to open file
+        try{
+            in = new Scanner(filePath);
+            // iterate with while construction
+            while( in.hasNext()){ // append formatted data to sb
+                sb.append(String.format("%-20s %-20s%n","Bank card number: "+ in.next(),"Encryption: "+ in.next()));
+            } // end while
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // close resources
+            if( in != null)
+                in.close();
+        }
+        // return sb representation in String format
+        return sb.toString();
     }
-
-
 }

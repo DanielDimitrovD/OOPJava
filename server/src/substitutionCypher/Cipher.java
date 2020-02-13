@@ -1,7 +1,7 @@
 package substitutionCypher;
 
 public class Cipher {
-    private int offset; // offset of substituion Cypher
+    private int offset; // offset of substitution Cypher
     private final StringBuilder sb; // string builder
 
     public Cipher(int offset) {
