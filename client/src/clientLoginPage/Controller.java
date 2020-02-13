@@ -154,27 +154,22 @@ public class Controller {
             txtEncrypt.requestFocus(); // request focus on encryption text field
         }
         else {  // card number is valid
-            String result = server.encryptCardNumber(txtUsername.getText(),encryptionInput); // request for RMI method
-            if ( result != null){  // if user has privileges to use encryption method of RMI
-            //    txtResults.setText(result); // set Results textField
-                //showMessage(Alert.AlertType.INFORMATION,"Encryption of card number","Encryption of card number successful!",
-                 //       "Results are shown in the Results text field.");
-                showMessage(Alert.AlertType.INFORMATION,"Encryption of card number","Information about current operation.",
-                        result);
-
+            try {
+                String result = server.encryptCardNumber(txtUsername.getText(), encryptionInput);
+                if (result != null) {  // if user has privileges to use encryption method of RMI
+                    showMessage(Alert.AlertType.INFORMATION,"Encryption of card number","Information about current operation.",
+                            result);
+                }
+            } catch (RemoteException e) {
+                showMessage(Alert.AlertType.ERROR,"Encryption of card number","Server host unavailable.",
+                        "Please try again later.");
+                Platform.exit();
+                System.exit(0);
+            }
+            // request for RMI method
                 txtResults.requestFocus(); // request focus on the result textField
             }
-          /*  else{  // user has no rights to use encryption method of RMI
-                txtEncrypt.setText(""); // clear encryption text
-                txtDecrypt.setText(""); // clear decryption text
-                txtResults.setText(""); // clear result textField
-                showMessage(Alert.AlertType.WARNING,"Encryption of card number","Encryption of card number unsuccessful",
-                        String.format("User:[%s] has no rights to use encryption functionality",txtUsername.getText()));
-            }
-
-           */
         }
-    }
     @FXML
     void btnQuitClicked(ActionEvent event) throws RemoteException {
         showMessage(Alert.AlertType.INFORMATION,"Client main page","Exiting the system","");
