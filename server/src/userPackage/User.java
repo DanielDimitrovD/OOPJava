@@ -1,6 +1,4 @@
-package serverDefinitions;
-
-import serverDefinitions.Privileges;
+package userPackage;
 
 import java.io.Serializable;
 

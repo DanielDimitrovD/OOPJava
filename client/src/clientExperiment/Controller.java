@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,7 +37,8 @@ public class Controller {
     @FXML
     void btnLoginClicked(ActionEvent event) throws IOException {
         try{
-            LoginUser user = new LoginUser(txtUsername.getText(),txtPassword.getText());
+           String user = String.format("%s %s%n",txtUsername.getText(),txtPassword.getText());
+        //    LoginUser user = new LoginUser(txtUsername.getText(),txtPassword.getText());
             Socket clientSocket = new Socket(hostName,portNumber);
 
             ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -46,11 +46,10 @@ public class Controller {
 
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
 
-
-            out.writeObject("ebalo si");
+            out.writeObject(user);
             String result = (String)in.readObject();
 
-            Platform.runLater( ()-> txtResult.setText(result));
+            txtResult.setText(result);
 
             if(in !=null)
                 in.close();

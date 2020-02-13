@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.app.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.app.Controller">
    <center>
       <TabPane prefHeight="341.0" prefWidth="393.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -134,6 +135,55 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab closable="false" text="Table view from file">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <VBox layoutX="118.0" layoutY="59.0" prefHeight="367.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <children>
+                                    <Label fx:id="lblViewData" text="Visualize table from file">
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </VBox.margin>
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </padding>
+                                        <font>
+                                            <Font size="14.0" />
+                                        </font>
+                                    </Label>
+                                    <Separator prefHeight="0.0" prefWidth="335.0" />
+                                    <Separator prefHeight="0.0" prefWidth="335.0" />
+                              <TextArea fx:id="txaLog" editable="false" prefHeight="214.0" prefWidth="335.0" style="-fx-background-color: #ffffff;">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
+                              </TextArea>
+                              <Separator prefWidth="200.0" />
+                              <Button fx:id="btnOpenByEncryption" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" text="View data&#10;by Encryption number&#10;" textAlignment="CENTER">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="100.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnOpenByCard" mnemonicParsing="false" prefHeight="42.0" prefWidth="140.0" text="View data by&#10; Card number" textAlignment="CENTER">
+                                 <VBox.margin>
+                                    <Insets left="100.0" top="6.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Button>
+                                </children>
+                            </VBox>
+                        </children></AnchorPane>
+                </content>
+            </Tab>
         </tabs>
       </TabPane>
    </center>

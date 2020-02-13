@@ -4,21 +4,25 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Formatter;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import Utilities.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import serverDefinitions.Privileges;
-import serverDefinitions.User;
-import serverDefinitions.Users;
+import serverRMIDefinitions.*;
+import userPackage.Privileges;
 
 public class Controller {
+
+    private ServerObjectInterface serverObjectInterface; // interface object
+    private Registry registry; // registry to bind
 
     private String pathToCredentials; // path to XML file with user data
     private boolean isEmpty;  // if XML file is empty
@@ -70,50 +74,18 @@ public class Controller {
 
     @FXML
     private Button btnExit;
+    @FXML
+    private Label lblViewData;
 
+    @FXML
+    private TextArea txaLog;
 
-    // method to create an alert with type,title,headerText,contextText for reuse
-    private void showMessage(Alert.AlertType type, String title, String headerText, String contextText)  {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contextText);
-        alert.showAndWait();
-    }
+    @FXML
+    private Button btnOpenByEncryption;
 
-    // initialize XStream options
-    private void initXStream(XStream stream){
-        stream.alias("Users",Users.class); // create alias to Users class
-        stream.alias("User",User.class); // create alias to User class
-        stream.addImplicitCollection(Users.class,"users"); // set Users as root tag
-    }
+    @FXML
+    private Button btnOpenByCard;
 
-    // method to write xml to file
-    private void writeInXML(File f,Users users){
-        XStream stream = new XStream(new DomDriver()); // create Xstream object
-        initXStream(stream); // initialize XStream options
-
-        String process = stream.toXML(users); // convert data to XML format
-
-        try(Formatter writer = new Formatter(new FileWriter(f))){
-            writer.flush(); // flush writer
-            writer.format("%s",process); // write data to file
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    // method to read XML from file
-    private Users readFromXML(File f) throws IOException {
-        XStream xStream = new XStream(new DomDriver()); // initialize xstream object
-        initXStream(xStream); // initialize xStream options
-
-        FileReader reader = new FileReader(f);
-        Users result = (Users)xStream.fromXML(reader); // deserialize from XML to Users class
-
-        if(reader !=null) // close reader
-            reader.close();
-        return result;
-    }
 
     @FXML
     // add account to database in server side
@@ -122,65 +94,29 @@ public class Controller {
         String password = txtPassword.getText(); // get password from form
         Privileges privilege = cmbPrivilege.getValue(); // get privilege from form
 
-        if( username.length() == 0 || password.length() == 0 || privilege == null){ // input is invalid
+        if ( !Utils.checkUserAndPassword(username) || !Utils.checkUserAndPassword(password) || privilege == null) { // input is invalid
             txtUsername.setText(""); // clear username textField
             txtPassword.setText(""); // clear password textField
             cmbPrivilege.getSelectionModel().selectFirst(); // clear combobox options
-            showMessage(Alert.AlertType.WARNING,"Adding account to server","Invalid information entered",
+            Utils.showMessage(Alert.AlertType.WARNING, "Adding account to server", "Invalid information entered",
                     "Please enter the form again.");
             txtUsername.requestFocus(); // request focus on username textField
-        }
-        else {  // input is valid
+        } else {  // input is valid
 
-         /*   XStream xStream = new XStream(new DomDriver()); // initialize xstream object
-            xStream.alias("Users", Users.class);  // create alias for Users class
-            xStream.alias("user", User.class); // create alias for User class
-            xStream.addImplicitCollection(Users.class,"users");
-        */
-           /*     try( Formatter writer = new Formatter(new FileWriter("serverData/data.xml"))){
-                    writer.flush(); // flush writer
-                    Users users = new Users(); // create Users class
-                    users.addUser(user); // add user to Users class
-
-                    String xml = xStream.toXML(users); // serialize object
-                    writer.format("%s",xml); // write xml to the file
-             */
-
-            User user = new User(username,password,privilege); // create a user instance
-
-            if(isEmpty) {  // file is empty, only write in file
-
-                Users users = new Users(); // create Users instance
-                users.addUser(user); // add User to empty Users list
-                writeInXML(new File(pathToCredentials),users); // serialize Users class in XML in file
+                serverObjectInterface.addUser(txtUsername.getText(), txtPassword.getText(), cmbPrivilege.getValue()); // add user to database
+                Utils.showMessage(Alert.AlertType.INFORMATION, "Adding account to server", "Account added successfully",
+                        String.format("Username: {%s}%nPassword: {%s}%nPrivileges: {%s}%n",username,password,privilege));
             }
-
-            else {  // file is not empty, have to read from it first
-
-                Users users = readFromXML(new File(pathToCredentials)); // read from XML and convert to Users class
-                users.addUser(user); // add user to Users class
-                writeInXML(new File(pathToCredentials),users); // write back to XML file
-
-      /*          FileReader reader = new FileReader("serverData/data.xml"); // open data file to read from
-                Users users = (Users)xStream.fromXML(reader); // deserialize Users class
-                users.addUser(user); // add user to the Users class
-
-
-                try(BufferedWriter writer = new BufferedWriter(new FileWriter("./data.xml"))){
-                    //writer.flush(); // flush writer
-                    String xml = xStream.toXML(users); // serialize object
-                    writer.write(xml); // write to file
-                }*/
-            }
-            showMessage(Alert.AlertType.INFORMATION,"Adding account to server","Account added successfully","");
-        }
     }
-
     @FXML
-    void initialize() throws IOException {
+    void initialize() throws IOException, NotBoundException, RemoteException {
         ObservableList<Privileges> options = FXCollections.observableArrayList(
-                Privileges.NONE,Privileges.GUEST,Privileges.USER,Privileges.BOTH
+                Privileges.GUEST,Privileges.USER,Privileges.ADMIN
         );
+
+        registry = LocateRegistry.getRegistry(12345);
+        serverObjectInterface = (ServerObjectInterface) registry.lookup("ServerObjectInterfaceImplementation");
+
         pathToCredentials = "D:\\encryptionProject\\server\\src\\serverData\\data.xml";
         isEmpty = ( Files.size(Paths.get(pathToCredentials)) == 0); // check if file is empty
         assert lblAccountInfo != null : "fx:id=\"lblAccountInfo\" was not injected: check your FXML file 'sample.fxml'.";

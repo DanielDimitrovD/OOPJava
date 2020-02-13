@@ -1,6 +1,7 @@
 package clientLoginPage;
 
 import java.io.IOException;
+import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -10,11 +11,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import serverDefinitions.ServerObjectInterface;
+import serverRMIDefinitions.ServerObjectInterface;
 
 public class Controller {
-    Registry registry  = LocateRegistry.getRegistry(12345); // get registry
-    ServerObjectInterface server = (ServerObjectInterface)registry.lookup("ServerObjectInterfaceImplementation"); // get server object
+    Registry registry;
+    ServerObjectInterface server;
 
     @FXML
     private TabPane tpaneMenu;
@@ -182,6 +183,17 @@ public class Controller {
         assert txtUsername != null : "fx:id=\"txtUsername\" was not injected: check your FXML file 'sample.fxml'.";
         assert btnLogin != null : "fx:id=\"btnLogin\" was not injected: check your FXML file 'sample.fxml'.";
         assert imgTitle != null : "fx:id=\"imgTitle\" was not injected: check your FXML file 'sample.fxml'.";
+
+        try{
+            registry = LocateRegistry.getRegistry(12345);
+            server = (ServerObjectInterface)registry.lookup("ServerObjectInterfaceImplementation");
+        } catch (AccessException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
 
         tabOperations.setDisable(true); // disable Operations tab
     }

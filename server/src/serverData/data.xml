@@ -1,12 +1,12 @@
 <Users>
   <User>
-    <username>daads</username>
-    <password>69</password>
-    <privileges>NONE</privileges>
+    <username>dakata619</username>
+    <password>d123</password>
+    <privileges>ADMIN</privileges>
   </User>
   <User>
-    <username>dakata619</username>
-    <password>619</password>
-    <privileges>BOTH</privileges>
+    <username>ivo12</username>
+    <password>a12</password>
+    <privileges>GUEST</privileges>
   </User>
 </Users>

@@ -6,8 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import serverDefinitions.ServerObjectInterface;
-import serverDefinitions.ServerObjectInterfaceImplementation;
+import serverRMIDefinitions.ServerObjectInterface;
+import serverRMIDefinitions.ServerObjectInterfaceImplementation;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -27,7 +27,10 @@ public class Server extends Application {
         stage.setResizable(false);
         stage.setTitle("Server control panel");
         stage.setScene(scene);
-        stage.setOnCloseRequest( event-> System.exit(0));
+        stage.setOnCloseRequest( event-> {
+            Platform.exit();
+            System.exit(0);
+        });
         stage.show();
     }
 
