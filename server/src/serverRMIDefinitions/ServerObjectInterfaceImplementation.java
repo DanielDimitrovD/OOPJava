@@ -2,13 +2,14 @@ package serverRMIDefinitions;
 
 import filesOperations.BankCardByCardNumberStream;
 import filesOperations.BankCardByEncryptionStream;
-import substitutionCypher.Cipher;
+import substitutionCypher.EncryptCard;
 import userPackage.Privileges;
 import userPackage.User;
 import userPackage.Users;
 import Utilities.Utils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,24 +21,23 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ServerObjectInterfaceImplementation extends UnicastRemoteObject implements ServerObjectInterface {
 
     private Registry registry; // reference to the object
     private Map<String, User> userCredentials; // store username and password
-    private Cipher cipher; // cypher for encryption and decryption
     private XStream xStream; // used for reading and writing to XML configuration file
     private String pathToCredentialsFile; // path to XML file with information about users
     private TreeMap<String,String> encryptions;  // pair ( encryption number) -> ( bank account number)
     private BankCardByCardNumberStream streamByCard; // used for I/O operations with data sorted by card number
     private BankCardByEncryptionStream streamByEncryption; // used for I/O operations with data sorted by encryption number
+    private StringBuilder sb; // string builder for manipulation of strings
+    private int numberOfEncryptions; // counts number of encryptions of single Bank number
 
+    private static final int INITIAL_OFFSET = 5; // initial offset for the Cipher
 
     public ServerObjectInterfaceImplementation() throws RemoteException, IOException {
-        cipher = new Cipher(5); // create cipher with offset 5
         pathToCredentialsFile = "D:\\encryptionProject\\server\\src\\serverData\\data.xml"; // set XML config file location
         userCredentials = new HashMap<>(); // initialize hashMap
         encryptions = new TreeMap<>(); // initialize treeMap
@@ -46,6 +46,7 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
         xStream = new XStream(new DomDriver()); // initialize xStream
         Utils.initXStream(xStream); // set up xStream
         initializeMap(); // fill map with users
+
     }
 
     public void setRegistry(Registry r){
@@ -78,17 +79,61 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
         }
     }
 
+    // function that counts number of errors for Bank card number
+    private int countEncryptions(String cardNumber){
+        int counter = 0;
+
+        Set<Map.Entry<String,String>> entry = encryptions.entrySet();
+
+        for ( Map.Entry<String,String> i : entry){
+            if(i.getValue().equals(cardNumber)){
+                counter++;
+            }
+        }
+        return counter;
+    }
+    // write cards and their encryption's in file, sorted by card number
+    public void writeSortedByCardNumber(){
+        TreeSet<String> bankCards = new TreeSet<>();
+        Set<Map.Entry<String,String>> cards = encryptions.entrySet();
+
+        for( Map.Entry<String,String> i: cards){
+            bankCards.add(i.getValue());
+        }
+        streamByCard.writeToFile(bankCards,cards);
+    }
+    // write cards and their encryption's in file, sorted by encryption number
+    public void writeSortedByEncryption(){
+        Set<Map.Entry<String,String>> cards = encryptions.entrySet();
+        streamByEncryption.writeToFile(cards);
+    }
+
+
     @Override
     public final String encryptCardNumber(String username, String cardNumber) throws RemoteException {
-     //   sb.setLength(0); // clear stringBuilder
+        sb.setLength(0); // clear stringBuilder
 
         Privileges privilege = userCredentials.get(username).getPrivileges(); // get username privilege
-        if (privilege.equals(Privileges.GUEST) || privilege.equals(Privileges.USER) || privilege.equals(Privileges.ADMIN)) // the user has functionality for encryption method
+        if (privilege.equals(Privileges.GUEST)) // check if user has functionality for encryption method
         {
-            return cipher.encrypt(cardNumber); // return encrypted card number
-        } else { // user has no rights for the encryption method
-            return null;
+            return sb.append("Guests don't have encryption functionality!").toString(); // return encrypted card number
         }
+        if (!Utils.verifyCardNumber(cardNumber) | !Utils.verifyLuhn(cardNumber)) {// check if card number is valid
+            return  sb.append("Invalid bank card! Enter information again.").toString();
+        }
+
+        int count = countEncryptions(cardNumber); // check number of occurrences of current card number
+
+        if( count == 0){ // first occurrence of card number
+            EncryptCard encryptCard = new EncryptCard(INITIAL_OFFSET);
+            String result = encryptCard.encrypt(cardNumber);
+            encryptions.put(result,cardNumber);
+            writeSortedByCardNumber();
+            writeSortedByEncryption();
+        } else if( count >=1 && count <= 10){
+
+        }
+
     }
 
     // decryption of card Number
@@ -96,7 +141,7 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     public final String decryptCardNumber(String username, String cardNumber) throws RemoteException {
 
         Privileges privilege = userCredentials.get(username).getPrivileges(); // get user privileges
-        if (privilege.equals(Privileges.USER) || privilege.equals(Privileges.ADMIN)) // user has privileges for decryption method
+        if (!privilege.equals(Privileges.GUEST)) // user has privileges for decryption method
         {
             return cipher.decrypt(cardNumber); // return decrypted card number
         } else { // user has no rights for the decryption method

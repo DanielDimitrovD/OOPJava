@@ -1,12 +1,16 @@
 package substitutionCypher;
 
-public class Cipher {
+public class EncryptCard {
     private int offset; // offset of substitution Cypher
     private final StringBuilder sb; // string builder
 
-    public Cipher(int offset) {
+    public EncryptCard(int offset) {
         this.offset = offset;
         sb = new StringBuilder();
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset % 16;
     }
 
     // encryption method

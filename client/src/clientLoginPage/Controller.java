@@ -146,7 +146,7 @@ public class Controller {
     void btnEncryptClicked(ActionEvent event) throws RemoteException {
         String encryptionInput = Utilities.removeWhiteSpaces(txtEncrypt.getText()); // remove whitespaces from input
         txtDecrypt.setText(""); // clear decryption textField
-        if( !Utilities.verifyCardNumber(encryptionInput) || !Utilities.verifyLuhn(encryptionInput)){  // invalid card number
+        if( !Utilities.verifyCardNumber(encryptionInput)){  // invalid card number
             showMessage(Alert.AlertType.WARNING,"Encryption of car number","Card number for encryption is INVALID!",
                     "Enter card number for encryption again.");
             txtEncrypt.setText(""); // clear encryption textField
