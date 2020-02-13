@@ -1,15 +1,13 @@
-package clientLoginPage;
+package client.app;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Scanner;
 
+import clientUtils.Utilities;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
