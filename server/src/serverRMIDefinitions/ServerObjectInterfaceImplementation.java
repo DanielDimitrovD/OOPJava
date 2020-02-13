@@ -1,5 +1,6 @@
 package serverRMIDefinitions;
 
+import substitutionCypher.Cipher;
 import userPackage.Privileges;
 import userPackage.User;
 import userPackage.Users;
@@ -22,16 +23,17 @@ import java.util.Map;
 public class ServerObjectInterfaceImplementation extends UnicastRemoteObject implements ServerObjectInterface {
 
     private Map<String, User> userCredentials; // store username and password
-    private final StringBuilder sb; // used to build result of encrypted card number
-    private int offset; // define offset of algorithm
+    private Cipher cipher; // cypher for encryption and decryption
+    private XStream xStream; // used for reading and writing to XML configuration file
     private String pathToCredentialsFile; // path to XML file with information about users
 
     public ServerObjectInterfaceImplementation() throws RemoteException, IOException {
-        sb = new StringBuilder();
-        offset = 5;
-        pathToCredentialsFile = "D:\\encryptionProject\\server\\src\\serverData\\data.xml";
+        cipher = new Cipher(5); // create cipher with offset 5
+        pathToCredentialsFile = "D:\\encryptionProject\\server\\src\\serverData\\data.xml"; // set XML config file location
         userCredentials = new HashMap<>();
-        initializeMap();
+        xStream = new XStream(new DomDriver());
+        Utils.initXStream(xStream); // initialize xStream
+        initializeMap(); // fill map with users
     }
 
     // initialize userCredentials
@@ -43,15 +45,11 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
             Files.createFile(path);
             return;
         } else if (Files.size(Paths.get(pathToCredentialsFile)) == 0) {
-            return; // if file is created but doesn't have anything written to it do nothing
+            return; // if file is created but doesn't have anything written to it exit method
         } else {  // file exists and has data written to it
             try (FileReader reader = new FileReader(pathToCredentialsFile)) { // read from file
-                XStream stream = new XStream(new DomDriver());  // initialize Xstream
-                stream.alias("Users", Users.class);  // create alias for Users class
-                stream.alias("User", User.class); // create alias for User class
-                stream.addImplicitCollection(Users.class, "users");
 
-                Users data = (Users) stream.fromXML(reader);  // serialize XML to Users class
+                Users data = (Users) xStream.fromXML(reader);  // serialize XML to Users class
 
                 for (User i : data.getUsers()) {    // fill HashMap with User values
                     userCredentials.put(i.getUsername(), new User(i.getUsername(), i.getPassword(), i.getPrivileges()));
@@ -66,15 +64,12 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
 
     @Override
     public final String encryptCardNumber(String username, String cardNumber) throws RemoteException {
-        sb.setLength(0); // clear stringBuilder
+     //   sb.setLength(0); // clear stringBuilder
 
         Privileges privilege = userCredentials.get(username).getPrivileges(); // get username privilege
         if (privilege.equals(Privileges.GUEST) || privilege.equals(Privileges.USER) || privilege.equals(Privileges.ADMIN)) // the user has functionality for encryption method
         {
-            for (int i = 0; i < cardNumber.length(); i++) { // encrypting card number
-                sb.append((int) (cardNumber.charAt(i) - '0' + offset) % 10);
-            }
-            return sb.toString();
+            return cipher.encrypt(cardNumber); // return encrypted card number
         } else { // user has no rights for the encryption method
             return null;
         }
@@ -83,16 +78,11 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     // decryption of card Number
     @Override
     public final String decryptCardNumber(String username, String cardNumber) throws RemoteException {
-        sb.setLength(0); // clear stringBuilder
-        offset %= 10; // if key is more than 10 keep it in range [0-9]
 
         Privileges privilege = userCredentials.get(username).getPrivileges(); // get user privileges
         if (privilege.equals(Privileges.USER) || privilege.equals(Privileges.ADMIN)) // user has privileges for decryption method
         {
-            for (int i = 0; i < cardNumber.length(); i++) { // decrypting card number
-                sb.append((int) (cardNumber.charAt(i) - '0' - offset) >= 0 ? (int) (cardNumber.charAt(i) - '0' - offset) : (int) (cardNumber.charAt(i) - '0' - offset) + 10);
-            }
-            return sb.toString();
+            return cipher.decrypt(cardNumber); // return decrypted card number
         } else { // user has no rights for the decryption method
             return null;
         }
@@ -124,4 +114,4 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
             e.printStackTrace();
         } // catch end
     } // method addUser end
-}
+} // class end
