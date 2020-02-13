@@ -2,6 +2,7 @@ package filesOperations;
 
 // class for I/O operations for bank card numbers and their encryption sorted by card numbers
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -12,18 +13,16 @@ import java.util.*;
 // file used for I/O operations for this class is "sortedByCardNumber.txt"
 
 public class BankCardByCardNumberStream {
-    private Path filePath; // path to file
+    private File f; // path to file
     private Scanner in ; // used for input operations
     private Formatter out; // used to write to files
-    private StringBuilder sb; // used for string operations
 
     public BankCardByCardNumberStream()
     {
-        sb = new StringBuilder(); // initialize sb
-        filePath = Paths.get("sortedByCardNumber.txt"); // get path to file
-        if(!Files.exists(filePath)) { // check if file exists
+        f = new File("sortedByCardNumber.txt"); // get path to file
+        if(!f.exists()) { // check if file exists
             try{
-            Files.createFile(filePath); // create file
+            f.createNewFile(); // create file
         } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -32,13 +31,18 @@ public class BankCardByCardNumberStream {
 
     // function to write to file in sorted format by card number
     public void writeToFile(TreeSet<String> bankCards, Set<Map.Entry<String,String>> data){
-        sb.setLength(0); // clear sb
+
+        f = new File("sortedByCardNumber.txt");
+
         // try to open file
         try{
-            out = new Formatter((OutputStream) filePath);
+            out = new Formatter(f);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
 
         // iterate through bankCards and their encryption data
         for( String bCard:bankCards){
@@ -50,7 +54,7 @@ public class BankCardByCardNumberStream {
         }
         // try to write to file
         try{
-            out.format("%s%n",sb.toString());
+            out.format("%s%n",sb);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,10 +64,14 @@ public class BankCardByCardNumberStream {
 
     // read data from file and return it's String representation
     public String readFromFile(){
-        sb.setLength(0); // clear sb
+
+        f = new File("sortedByCardNumber.txt");
+        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
+
         // try to open file
         try{
-            in = new Scanner(filePath);
+            in = new Scanner(f);
             // iterate with while construction
             while( in.hasNext()){ // append formatted data to sb
                 sb.append(String.format("%-20s %-20s%n","Bank card number: "+ in.next(),"Encryption: "+ in.next()));

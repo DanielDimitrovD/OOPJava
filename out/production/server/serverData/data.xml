@@ -9,4 +9,14 @@
     <password>a12</password>
     <privileges>GUEST</privileges>
   </User>
+  <User>
+    <username>admin</username>
+    <password>asd</password>
+    <privileges>ADMIN</privileges>
+  </User>
+  <User>
+    <username>dakata123</username>
+    <password>asd1</password>
+    <privileges>USER</privileges>
+  </User>
 </Users>

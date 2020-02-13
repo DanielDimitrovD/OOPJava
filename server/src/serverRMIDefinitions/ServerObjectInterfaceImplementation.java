@@ -109,44 +109,85 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     }
 
 
-    @Override
-    public final String encryptCardNumber(String username, String cardNumber) throws RemoteException {
-        sb.setLength(0); // clear stringBuilder
+    public String findCardNumber( String bankCard){
+        String result = "";
 
+        Set<Map.Entry<String,String>> entry = encryptions.entrySet();
+
+        for( Map.Entry<String,String> card : entry){
+            if(card.getKey().equals(bankCard)){
+                result = card.getValue();
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public  String encryptCardNumber(String username, String cardNumber) throws RemoteException {
+        String result = "";
         Privileges privilege = userCredentials.get(username).getPrivileges(); // get username privilege
         if (privilege.equals(Privileges.GUEST)) // check if user has functionality for encryption method
         {
-            return sb.append("Guests don't have encryption functionality!").toString(); // return encrypted card number
+            result = "Guests don't have encryption functionality!";
+            return result;
         }
         if (!Utils.verifyCardNumber(cardNumber) | !Utils.verifyLuhn(cardNumber)) {// check if card number is valid
-            return  sb.append("Invalid bank card! Enter information again.").toString();
+            result = "Invalid bank card! Enter information again.";
+            return  result;
         }
 
         int count = countEncryptions(cardNumber); // check number of occurrences of current card number
 
+        EncryptCard encryptCard;
+
         if( count == 0){ // first occurrence of card number
-            EncryptCard encryptCard = new EncryptCard(INITIAL_OFFSET);
-            String result = encryptCard.encrypt(cardNumber);
+            encryptCard = new EncryptCard(INITIAL_OFFSET);
+            result = encryptCard.encrypt(cardNumber);
             encryptions.put(result,cardNumber);
             writeSortedByCardNumber();
             writeSortedByEncryption();
+            return  result;
         } else if( count >=1 && count <= 10){
-
+            encryptCard = new EncryptCard(INITIAL_OFFSET + count);
+            result = encryptCard.encrypt(cardNumber);
+            encryptions.put(result,cardNumber);
+            writeSortedByCardNumber();
+            writeSortedByEncryption();
+            return  result;
+        } else if( count  == 11 ){
+            encryptCard = new EncryptCard(INITIAL_OFFSET -1);
+            result  = encryptCard.encrypt(cardNumber);
+            encryptions.put(result,cardNumber);
+            writeSortedByCardNumber();
+            writeSortedByEncryption();
+            return  result;
+        } else if ( count > 11) {
+            result = "No more than 11 times can you encrypt the same card";
+            return  result;
         }
-
+        return  result;
     }
 
     // decryption of card Number
     @Override
     public final String decryptCardNumber(String username, String cardNumber) throws RemoteException {
+        String result = "";
 
         Privileges privilege = userCredentials.get(username).getPrivileges(); // get user privileges
-        if (!privilege.equals(Privileges.GUEST)) // user has privileges for decryption method
+        if (privilege.equals(Privileges.GUEST)) // user doesn't have privileges for decryption method
         {
-            return cipher.decrypt(cardNumber); // return decrypted card number
-        } else { // user has no rights for the decryption method
-            return null;
+            result = "No permissions for decryption functionality";
+            return result; // return decrypted card number
         }
+
+        result = findCardNumber(cardNumber);
+
+        if( result.equals("")){
+            result = "Wrong encryption number. Try again with another number";
+        }
+
+        return result;
     }
 
     // validate if a client can continue to the main client functionality
