@@ -1,5 +1,7 @@
 package serverRMIDefinitions;
 
+import filesOperations.BankCardByCardNumberStream;
+import filesOperations.BankCardByEncryptionStream;
 import substitutionCypher.Cipher;
 import userPackage.Privileges;
 import userPackage.User;
@@ -16,24 +18,38 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ServerObjectInterfaceImplementation extends UnicastRemoteObject implements ServerObjectInterface {
 
+    private Registry registry; // reference to the object
     private Map<String, User> userCredentials; // store username and password
     private Cipher cipher; // cypher for encryption and decryption
     private XStream xStream; // used for reading and writing to XML configuration file
     private String pathToCredentialsFile; // path to XML file with information about users
+    private TreeMap<String,String> encryptions;  // pair ( encryption number) -> ( bank account number)
+    private BankCardByCardNumberStream streamByCard; // used for I/O operations with data sorted by card number
+    private BankCardByEncryptionStream streamByEncryption; // used for I/O operations with data sorted by encryption number
+
 
     public ServerObjectInterfaceImplementation() throws RemoteException, IOException {
         cipher = new Cipher(5); // create cipher with offset 5
         pathToCredentialsFile = "D:\\encryptionProject\\server\\src\\serverData\\data.xml"; // set XML config file location
-        userCredentials = new HashMap<>();
-        xStream = new XStream(new DomDriver());
-        Utils.initXStream(xStream); // initialize xStream
+        userCredentials = new HashMap<>(); // initialize hashMap
+        encryptions = new TreeMap<>(); // initialize treeMap
+        streamByCard = new BankCardByCardNumberStream(); // initialize I/O for data sorted by card number
+        streamByEncryption = new BankCardByEncryptionStream(); // initialize I/O for data sorted by encryption number
+        xStream = new XStream(new DomDriver()); // initialize xStream
+        Utils.initXStream(xStream); // set up xStream
         initializeMap(); // fill map with users
+    }
+
+    public void setRegistry(Registry r){
+        registry = r;
     }
 
     // initialize userCredentials
