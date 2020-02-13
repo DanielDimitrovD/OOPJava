@@ -65,7 +65,7 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
         sb.setLength(0); // clear stringBuilder
 
         Privileges privilege = userCredentials.get(username).getPrivileges(); // get username privilege
-        if( privilege.equals(Privileges.ENCRYPT) || privilege.equals(Privileges.BOTH)) // the user has functionality for encryption method
+        if( privilege.equals(Privileges.GUEST) || privilege.equals(Privileges.USER)) // the user has functionality for encryption method
         {
             for (int i = 0; i < cardNumber.length(); i++) { // encrypting card number
                 sb.append((int) (cardNumber.charAt(i) - '0' + offset) % 10);
@@ -83,7 +83,7 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
         offset %= 10; // if key is more than 10 keep it in range [0-9]
 
         Privileges privilege = userCredentials.get(username).getPrivileges(); // get user privileges
-        if (privilege.equals(Privileges.DECRYPT) || privilege.equals(Privileges.BOTH)) // user has privileges for decryption method
+        if (privilege.equals(Privileges.USER)) // user has privileges for decryption method
         {
             for (int i = 0; i < cardNumber.length(); i++) { // decrypting card number
                 sb.append((int) (cardNumber.charAt(i) - '0' - offset) >= 0 ? (int) (cardNumber.charAt(i) - '0' - offset) : (int) (cardNumber.charAt(i) - '0' - offset) + 10);

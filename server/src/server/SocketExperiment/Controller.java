@@ -1,11 +1,4 @@
-package server.app;
-
-import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Formatter;
-import java.util.ResourceBundle;
+package server.SocketExperiment;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -18,10 +11,21 @@ import serverDefinitions.Privileges;
 import serverDefinitions.User;
 import serverDefinitions.Users;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Formatter;
+import java.util.ResourceBundle;
+
 public class Controller {
 
     private String pathToCredentials; // path to XML file with user data
     private boolean isEmpty;  // if XML file is empty
+    XStream stream;
 
     @FXML
     private ResourceBundle resources;
@@ -90,7 +94,7 @@ public class Controller {
 
     // method to write xml to file
     private void writeInXML(File f,Users users){
-        XStream stream = new XStream(new DomDriver()); // create Xstream object
+        stream = new XStream(new DomDriver()); // create Xstream object
         initXStream(stream); // initialize XStream options
 
         String process = stream.toXML(users); // convert data to XML format
@@ -104,11 +108,11 @@ public class Controller {
     }
     // method to read XML from file
     private Users readFromXML(File f) throws IOException {
-        XStream xStream = new XStream(new DomDriver()); // initialize xstream object
-        initXStream(xStream); // initialize xStream options
+        stream = new XStream(new DomDriver()); // initialize xstream object
+        initXStream(stream); // initialize xStream options
 
         FileReader reader = new FileReader(f);
-        Users result = (Users)xStream.fromXML(reader); // deserialize from XML to Users class
+        Users result = (Users)stream.fromXML(reader); // deserialize from XML to Users class
 
         if(reader !=null) // close reader
             reader.close();
@@ -179,7 +183,7 @@ public class Controller {
     @FXML
     void initialize() throws IOException {
         ObservableList<Privileges> options = FXCollections.observableArrayList(
-                Privileges.NONE,Privileges.GUEST,Privileges.USER,Privileges.BOTH
+                Privileges.GUEST,Privileges.USER
         );
         pathToCredentials = "D:\\encryptionProject\\server\\src\\serverData\\data.xml";
         isEmpty = ( Files.size(Paths.get(pathToCredentials)) == 0); // check if file is empty

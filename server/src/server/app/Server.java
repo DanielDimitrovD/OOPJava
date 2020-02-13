@@ -27,8 +27,7 @@ public class Server extends Application {
         stage.setResizable(false);
         stage.setTitle("Server control panel");
         stage.setScene(scene);
-        stage.setOnCloseRequest( event -> Platform.exit());
-
+        stage.setOnCloseRequest( event-> System.exit(0));
         stage.show();
     }
 
