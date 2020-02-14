@@ -4,10 +4,6 @@ package filesOperations;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 // file used for I/O operations for this class is "sortedByCardNumber.txt"
@@ -86,4 +82,28 @@ public class BankCardByCardNumberStream {
         // return sb representation in String format
         return sb.toString();
     }
+
+    public String readFromFileWithoutFormat(){
+        f = new File("sortedByCardNumber.txt");
+        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
+
+        // try to open file
+        try{
+            in = new Scanner(f);
+            // iterate with while construction
+            while( in.hasNext()){ // append formatted data to sb
+                sb.append(String.format("%s %s%n",in.next(),in.next()));
+            } // end while
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // close resources
+            if( in != null)
+                in.close();
+        }
+        // return sb representation in String format
+        return sb.toString();
+    }
+
 }

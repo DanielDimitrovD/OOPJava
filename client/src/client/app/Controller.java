@@ -61,12 +61,6 @@ public class Controller {
     private TextField txtDecrypt;
 
     @FXML
-    private Label lblResults;
-
-    @FXML
-    private TextField txtResults;
-
-    @FXML
     private Button btnEncrypt;
 
     @FXML
@@ -121,26 +115,23 @@ public class Controller {
         txtEncrypt.setText(""); // clear encryption textField
         if(!Utilities.verifyDecryptNumber(decryptionInput)) {// input is invalid ( !16 digits)
             showMessage(Alert.AlertType.WARNING,"Decryption of card number","Card number for decryption is INVALID!",
-                    "Enter card number for decryption again.");
+                    "Enter card number [16 digits] for decryption again.");
             txtDecrypt.setText(""); // clear decryption textField
-            txtResults.setText(""); // clear results textField
             txtDecrypt.requestFocus(); // request focus on decryption text field
         }
         else {   // input is valid ( 16 digits)
+          try {
             String result = server.decryptCardNumber(txtUsername.getText(),decryptionInput); // request for RMI method
             if( result != null) { // user has decryption functionality
-                showMessage(Alert.AlertType.INFORMATION,"Decryption of card number","Decryption of card number successful",
-                        "Results are shown in the Results text field.");
-                txtResults.setText(result); // set Result textField
-                txtResults.requestFocus(); // request focus on results textField
+                showMessage(Alert.AlertType.INFORMATION, "Decryption of card number", "Information about decryption operation",
+                        result);
             }
-            else{ // user has no decryption functionality
-                txtEncrypt.setText(""); // clear encryption textField
-                txtDecrypt.setText(""); // clear decryption textField
-                txtResults.setText(""); // clear result textField
-                showMessage(Alert.AlertType.WARNING,"Decryption of card number","Decryption of card number unsuccessful",
-                        String.format("User:[%s] has no rights to use decryption functionality",txtUsername.getText()));
-            }
+        } catch (RemoteException e) {
+              showMessage(Alert.AlertType.ERROR,"Encryption of card number","Server host unavailable.",
+                      "Please try again later.");
+              Platform.exit();
+              System.exit(0);
+          }
         }
     }
 
@@ -152,7 +143,6 @@ public class Controller {
             showMessage(Alert.AlertType.WARNING,"Encryption of car number","Card number for encryption is INVALID!",
                     "Enter card number for encryption again.");
             txtEncrypt.setText(""); // clear encryption textField
-            txtResults.setText(""); // clear results textField
             txtEncrypt.requestFocus(); // request focus on encryption text field
         }
         else {  // card number is valid
@@ -168,19 +158,18 @@ public class Controller {
                 Platform.exit();
                 System.exit(0);
             }
-            // request for RMI method
-                txtResults.requestFocus(); // request focus on the result textField
             }
         }
     @FXML
     void btnQuitClicked(ActionEvent event) throws RemoteException {
         showMessage(Alert.AlertType.INFORMATION,"Client main page","Exiting the system","");
         Platform.exit();
+        System.exit(0);
     }
 
 
     @FXML
-    void initialize() {
+    void initialize() throws RemoteException {
         assert txtPassword != null : "fx:id=\"txtPassword\" was not injected: check your FXML file 'sample.fxml'.";
         assert lblTitle != null : "fx:id=\"lblTitle\" was not injected: check your FXML file 'sample.fxml'.";
         assert txtUsername != null : "fx:id=\"txtUsername\" was not injected: check your FXML file 'sample.fxml'.";
@@ -193,7 +182,10 @@ public class Controller {
         } catch (AccessException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            showMessage(Alert.AlertType.ERROR,"Connection to login panel","Error connecting to server.","" +
+                    "Please try again later");
+            Platform.exit();
+            System.exit(0);
         } catch (NotBoundException e) {
             e.printStackTrace();
         }

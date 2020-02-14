@@ -2,18 +2,14 @@ package serverRMIDefinitions;
 
 import filesOperations.BankCardByCardNumberStream;
 import filesOperations.BankCardByEncryptionStream;
+import filesOperations.XMLSerialization;
 import substitutionCypher.EncryptCard;
 import userPackage.Privileges;
 import userPackage.User;
 import userPackage.Users;
 import Utilities.Utils;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,34 +19,43 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
+// implementation of the RMI service interface
 public class ServerObjectInterfaceImplementation extends UnicastRemoteObject implements ServerObjectInterface {
+
+    private static final int INITIAL_OFFSET = 5; // initial offset for the Cipher
 
     private Registry registry; // reference to the object
     private Map<String, User> userCredentials; // store username and password
-    private XStream xStream; // used for reading and writing to XML configuration file
+    private XMLSerialization xmlSerialization; // used for reading and writing to XML configuration file
     private String pathToCredentialsFile; // path to XML file with information about users
     private TreeMap<String,String> encryptions;  // pair ( encryption number) -> ( bank account number)
     private BankCardByCardNumberStream streamByCard; // used for I/O operations with data sorted by card number
     private BankCardByEncryptionStream streamByEncryption; // used for I/O operations with data sorted by encryption number
     private StringBuilder sb; // string builder for manipulation of strings
-    private int numberOfEncryptions; // counts number of encryptions of single Bank number
-
-    private static final int INITIAL_OFFSET = 5; // initial offset for the Cipher
 
     public ServerObjectInterfaceImplementation() throws RemoteException, IOException {
-        pathToCredentialsFile = "D:\\encryptionProject\\server\\src\\serverData\\data.xml"; // set XML config file location
+        pathToCredentialsFile = "data.xml"; // set XML config file location
         userCredentials = new HashMap<>(); // initialize hashMap
-        encryptions = new TreeMap<>(); // initialize treeMap
         streamByCard = new BankCardByCardNumberStream(); // initialize I/O for data sorted by card number
         streamByEncryption = new BankCardByEncryptionStream(); // initialize I/O for data sorted by encryption number
-        xStream = new XStream(new DomDriver()); // initialize xStream
-        Utils.initXStream(xStream); // set up xStream
+        xmlSerialization = new XMLSerialization( pathToCredentialsFile); // initialize xml I/O instance
+        encryptions = new TreeMap<>(); // initialize treeMap
         initializeMap(); // fill map with users
-
+        initializeEncryptions();
     }
 
-    public void setRegistry(Registry r){
-        registry = r;
+
+    // function to initialize encryption's
+    public void initializeEncryptions() throws IOException, RemoteException{
+        String temp = streamByCard.readFromFileWithoutFormat(); // get sorted by card number (card number -> encryption)
+        temp = temp.replaceAll("\\n"," "); // reformatting
+        temp = temp.replaceAll("\\r",""); // reformatting
+        String[] parse = temp.split(" "); // split string to parts
+        for ( int i=0; i< parse.length-1; i+=2){ // constructing pair (encryption,card number)
+            String encryptionNumber = parse[i+1];
+            String bankCardNumber = parse[i];
+            encryptions.put(encryptionNumber,bankCardNumber); // adding data to treeMap
+        }
     }
 
     // initialize userCredentials
@@ -59,23 +64,17 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
 
         Path path = Paths.get(pathToCredentialsFile); // get file Path
         if (Files.notExists(path)) { // if file doesn't exist create it
-            Files.createFile(path);
+            Files.createFile(path); // create file
             return;
         } else if (Files.size(Paths.get(pathToCredentialsFile)) == 0) {
             return; // if file is created but doesn't have anything written to it exit method
         } else {  // file exists and has data written to it
-            try (FileReader reader = new FileReader(pathToCredentialsFile)) { // read from file
 
-                Users data = (Users) xStream.fromXML(reader);  // serialize XML to Users class
+                Users data = xmlSerialization.readXML();  // serialize XML to Users class
 
                 for (User i : data.getUsers()) {    // fill HashMap with User values
                     userCredentials.put(i.getUsername(), new User(i.getUsername(), i.getPassword(), i.getPrivileges()));
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -83,8 +82,10 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     private int countEncryptions(String cardNumber){
         int counter = 0;
 
+        // get entry set of encryption pairs ( encryption, card number)
         Set<Map.Entry<String,String>> entry = encryptions.entrySet();
 
+        // iterate and check if value equals card number and increment counter
         for ( Map.Entry<String,String> i : entry){
             if(i.getValue().equals(cardNumber)){
                 counter++;
@@ -97,9 +98,11 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
         TreeSet<String> bankCards = new TreeSet<>();
         Set<Map.Entry<String,String>> cards = encryptions.entrySet();
 
+        // iterate through entrySet and get credit cards
         for( Map.Entry<String,String> i: cards){
             bankCards.add(i.getValue());
         }
+        // use stream to handle writing to file
         streamByCard.writeToFile(bankCards,cards);
     }
     // write cards and their encryption's in file, sorted by encryption number
@@ -109,11 +112,12 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     }
 
 
+    // method to find if a card number exists in the data
     public String findCardNumber( String bankCard){
         String result = "";
 
         Set<Map.Entry<String,String>> entry = encryptions.entrySet();
-
+        // iterate and check if bank card is equal to the given argument
         for( Map.Entry<String,String> card : entry){
             if(card.getKey().equals(bankCard)){
                 result = card.getValue();
@@ -159,33 +163,6 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
             writeSortedByEncryption(); // write to file sorted by encryption number
             return result;
         }
-
-            // first occurrence of card number
-            //   encryptCard = new EncryptCard(INITIAL_OFFSET); // initialize encryption class
-      /*      result = encryptCard.encrypt(cardNumber); // get result
-            encryptions.put(result,cardNumber); // put result in encryption's map
-            writeSortedByCardNumber(); // write to file sorted by card number
-            writeSortedByEncryption(); // write to file sorted by encryption number
-            return  result;
-        } else if( count >=1 && count <= 10){ // occurence in range [1-10]
-            encryptCard = new EncryptCard(INITIAL_OFFSET + count);
-            result = encryptCard.encrypt(cardNumber);
-            encryptions.put(result,cardNumber);
-            writeSortedByCardNumber(); // write to file sorted by card number
-            writeSortedByEncryption();
-            return  result;
-        } else if( count  == 11 ){ // final occurence ( INTIAL_OFFSET + count = 16 ) % 16 = 0 there is no offset in this case
-            // that's why we substract 1 from the INITIAL_OFFSET
-            encryptCard = new EncryptCard(INITIAL_OFFSET -1);
-            result  = encryptCard.encrypt(cardNumber);
-            encryptions.put(result,cardNumber);
-            writeSortedByCardNumber();
-            writeSortedByEncryption();
-            return  result;
-        } else if ( count > 11) {
-            result = "No more than 11 times can you encrypt the same card";
-            return  result;
-        }*/
     }
     // decryption of card Number
     @Override
@@ -221,15 +198,20 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     // add account to database
     @Override
     public final void addUser(String username, String password, Privileges privileges) throws RemoteException {
-        XStream stream = new XStream(new DomDriver());
-        Utils.initXStream(stream);
+
+        // check if username is inserted already
+        if (userCredentials.containsKey(username)) {
+            return;  // don't enter user in database
+        }
 
         try {
-            Users users = Utils.readFromXML(new File(pathToCredentialsFile)); // extract Users from XML file
+
+            Users users = xmlSerialization.readXML();
             users.addUser(new User(username, password, privileges));  // put new User in Users collection
 
             userCredentials.put(username, new User(username, password, privileges)); // put new User in credentials table
-            Utils.writeInXML(new File(pathToCredentialsFile), users); // write back new information to XML file
+            xmlSerialization.writeXML(users) ;
+
         } catch (IOException e) {
             e.printStackTrace();
         } // catch end

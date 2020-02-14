@@ -4,6 +4,7 @@ import userPackage.Privileges;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+// interface for RMI service
 public interface ServerObjectInterface extends Remote {
     // encryption of card number
     String encryptCardNumber(String username,String cardNumber) throws RemoteException;

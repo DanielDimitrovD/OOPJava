@@ -62,34 +62,7 @@ public class Controller {
     private Button btnAddAccount;
 
     @FXML
-    private Label lblExport;
-
-    @FXML
-    private Label lblEncryption;
-
-    @FXML
-    private Label lblCardNumber;
-
-    @FXML
-    private Button btnSaveByEncryption;
-
-    @FXML
-    private Button btnSaveByCardNumber;
-
-    @FXML
-    private Button btnExit;
-    @FXML
-    private Label lblViewData;
-
-    @FXML
     private TextArea txaLog;
-
-    @FXML
-    private Button btnOpenByEncryption;
-
-    @FXML
-    private Button btnOpenByCard;
-
 
     @FXML
     // add account to database in server side
@@ -125,6 +98,7 @@ public class Controller {
             while (scanner.hasNext()) {
                 sb.append(String.format("%s  %s%n", scanner.next(),scanner.next()));
             }
+            sb.append(String.format("%s%n","End of file"));
         } catch (FileNotFoundException e) {
             showMessage(Alert.AlertType.ERROR, "Table view of file", "No file found.",
                     "Check file configurations.");
@@ -132,11 +106,26 @@ public class Controller {
         Platform.runLater( ()-> txaLog.setText(sb.toString()));
     }
 
+    // display data for bank cards and their encryption's sorted by encryption's
     @FXML
     void btnOpenByEncryptionClicked(ActionEvent event) {
+        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
+        sb.append("Reading data from file sorted by Encryption Card Number\n");
 
+        File f = new File("sortedByEncryption.txt");
+
+        try (Scanner scanner = new Scanner(f)) {
+            while (scanner.hasNext()) {
+                sb.append(String.format("%s  %s%n", scanner.next(),scanner.next()));
+            }
+            sb.append(String.format("%s%n","End of file"));
+        } catch (FileNotFoundException e) {
+            showMessage(Alert.AlertType.ERROR, "Table view of file", "No file found.",
+                    "Check file configurations.");
+        }
+        Platform.runLater( ()-> txaLog.setText(sb.toString()));
     }
-
     @FXML
     void initialize() throws IOException, NotBoundException, RemoteException {
         ObservableList<Privileges> options = FXCollections.observableArrayList(
@@ -146,7 +135,7 @@ public class Controller {
         registry = LocateRegistry.getRegistry(12345);
         serverObjectInterface = (ServerObjectInterface) registry.lookup("ServerObjectInterfaceImplementation");
 
-        pathToCredentials = "D:\\encryptionProject\\server\\src\\serverData\\data.xml";
+        pathToCredentials = "data.xml";
         isEmpty = ( Files.size(Paths.get(pathToCredentials)) == 0); // check if file is empty
         assert lblAccountInfo != null : "fx:id=\"lblAccountInfo\" was not injected: check your FXML file 'sample.fxml'.";
         assert lblUsername != null : "fx:id=\"lblUsername\" was not injected: check your FXML file 'sample.fxml'.";

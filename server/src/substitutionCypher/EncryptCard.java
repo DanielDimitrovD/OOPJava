@@ -1,5 +1,6 @@
 package substitutionCypher;
 
+// class used for encryption of bank number
 public class EncryptCard {
     private int offset; // offset of substitution Cypher
     private final StringBuilder sb; // string builder

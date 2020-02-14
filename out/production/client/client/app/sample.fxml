@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientLoginPage.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.app.Controller">
    <center>
       <TabPane fx:id="tpaneMenu" prefHeight="480.0" prefWidth="518.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -35,7 +35,7 @@
                         <Button fx:id="btnLogin" alignment="CENTER" layoutX="40.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnLoginClicked" prefHeight="38.0" prefWidth="264.0" style="-fx-background-color: #45b6fe;" text="LOGIN TO ACCOUNT" textFill="WHITE" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                         <ImageView fx:id="imgTitle" fitHeight="126.0" fitWidth="200.0" layoutX="77.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="70.0">
                            <image>
-                              <Image url="@bankImg.jpg" />
+                              <Image url="@../../images/bankImg.jpg" />
                            </image>
                         </ImageView>
                         <Label fx:id="lblUsername" layoutX="138.0" layoutY="185.0" text="Username" textAlignment="CENTER" AnchorPane.leftAnchor="138.0" AnchorPane.rightAnchor="134.0" />
@@ -64,14 +64,6 @@
                                     <Insets left="75.0" />
                                  </padding></Label>
                               <TextField fx:id="txtDecrypt" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" promptText="Decryption code">
-                                 <VBox.margin>
-                                    <Insets left="30.0" />
-                                 </VBox.margin></TextField>
-                              <Label fx:id="lblResults" text="Results">
-                                 <padding>
-                                    <Insets left="110.0" />
-                                 </padding></Label>
-                              <TextField fx:id="txtResults" alignment="CENTER" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" promptText="Results of operation">
                                  <VBox.margin>
                                     <Insets left="30.0" />
                                  </VBox.margin></TextField>
