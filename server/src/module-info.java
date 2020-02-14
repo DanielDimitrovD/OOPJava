@@ -8,4 +8,5 @@ module server {
     exports server.app to javafx.graphics; // give access to FX graphics
     opens serverRMIDefinitions to java.rmi; // uses RMI
     exports userPackage;
+    exports serverRMIDefinitions;
 }
