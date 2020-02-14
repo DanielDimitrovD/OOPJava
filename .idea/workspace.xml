@@ -115,7 +115,7 @@
       <recent name="D:\encryptionProject\server\src\serverData" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.Client">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -262,8 +262,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Server" />
         <item itemvalue="Application.Client" />
+        <item itemvalue="Application.Server" />
         <item itemvalue="JAR Application.jackson-dataformat-xml-2.10.2.jar" />
         <item itemvalue="Application.ClientLogin" />
         <item itemvalue="Application.BankServer" />
@@ -301,7 +301,7 @@
       <workItem from="1581521429741" duration="22025000" />
       <workItem from="1581548996411" duration="1584000" />
       <workItem from="1581577800864" duration="39847000" />
-      <workItem from="1581665627433" duration="33194000" />
+      <workItem from="1581665627433" duration="35457000" />
     </task>
     <servers />
   </component>
@@ -341,22 +341,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1581695257492" />
-    <state width="1860" height="278" key="GridCell.Tab.0.bottom" timestamp="1581698271366">
+    <state width="1860" height="278" key="GridCell.Tab.0.bottom" timestamp="1581705432646">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581698271366" />
-    <state width="1860" height="278" key="GridCell.Tab.0.center" timestamp="1581698271365">
+    <state width="1860" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581705432646" />
+    <state width="1860" height="278" key="GridCell.Tab.0.center" timestamp="1581705432645">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581698271365" />
-    <state width="1860" height="278" key="GridCell.Tab.0.left" timestamp="1581698271365">
+    <state width="1860" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581705432645" />
+    <state width="1860" height="278" key="GridCell.Tab.0.left" timestamp="1581705432645">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581698271365" />
-    <state width="1860" height="278" key="GridCell.Tab.0.right" timestamp="1581698271366">
+    <state width="1860" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581705432645" />
+    <state width="1860" height="278" key="GridCell.Tab.0.right" timestamp="1581705432646">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581698271366" />
+    <state width="1860" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581705432646" />
     <state width="1860" height="344" key="GridCell.Tab.1.bottom" timestamp="1581695608104">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

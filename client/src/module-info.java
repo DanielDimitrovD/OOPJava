@@ -1,5 +1,5 @@
 module client {
-    requires java.rmi; // RMI needed
+    requires java.rmi;
     requires javafx.controls;
     requires javafx.fxml;
     requires server;
