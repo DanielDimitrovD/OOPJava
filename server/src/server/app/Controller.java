@@ -8,10 +8,13 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import Utilities.Utils;
+import filesOperations.XMLSerialization;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +23,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import serverRMIDefinitions.*;
 import userPackage.Privileges;
+import userPackage.User;
+import userPackage.Users;
+
+import javax.swing.*;
 
 import static Utilities.Utils.showMessage;
 

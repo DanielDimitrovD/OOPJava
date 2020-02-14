@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.app.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.app.Controller">
    <center>
       <TabPane prefHeight="341.0" prefWidth="393.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -81,7 +81,7 @@
                                 <children>
                                     <Label fx:id="lblViewData" text="Visualize table from file">
                                         <VBox.margin>
-                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            <Insets bottom="5.0" left="95.0" right="5.0" top="5.0" />
                                         </VBox.margin>
                                         <padding>
                                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

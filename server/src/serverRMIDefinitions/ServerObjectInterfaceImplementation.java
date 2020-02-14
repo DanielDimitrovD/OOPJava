@@ -10,6 +10,7 @@ import userPackage.Users;
 import Utilities.Utils;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,6 +33,8 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     private BankCardByCardNumberStream streamByCard; // used for I/O operations with data sorted by card number
     private BankCardByEncryptionStream streamByEncryption; // used for I/O operations with data sorted by encryption number
     private StringBuilder sb; // string builder for manipulation of strings
+
+    private boolean isEmpty;
 
     public ServerObjectInterfaceImplementation() throws RemoteException, IOException {
         pathToCredentialsFile = "data.xml"; // set XML config file location
@@ -62,22 +65,24 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     private final void initializeMap() throws IOException, RemoteException {
         userCredentials = new HashMap<>();
 
-        Path path = Paths.get(pathToCredentialsFile); // get file Path
-        if (Files.notExists(path)) { // if file doesn't exist create it
-            Files.createFile(path); // create file
+        // Path path = Paths.get(pathToCredentialsFile); // get file Path
+        File f = new File(pathToCredentialsFile);
+        if (!f.exists()) { // if file doesn't exist create it
+            f.createNewFile(); // create file
+            isEmpty = true;
             return;
-        } else if (Files.size(Paths.get(pathToCredentialsFile)) == 0) {
-            return; // if file is created but doesn't have anything written to it exit method
         } else {  // file exists and has data written to it
+
+            if (f.length() != 0) {
 
                 Users data = xmlSerialization.readXML();  // serialize XML to Users class
 
                 for (User i : data.getUsers()) {    // fill HashMap with User values
                     userCredentials.put(i.getUsername(), new User(i.getUsername(), i.getPassword(), i.getPrivileges()));
                 }
+            }
         }
     }
-
     // function that counts number of errors for Bank card number
     private int countEncryptions(String cardNumber){
         int counter = 0;
