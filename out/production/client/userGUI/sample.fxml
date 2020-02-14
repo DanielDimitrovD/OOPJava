@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.app.Controller">
    <center>
       <TabPane fx:id="tpaneMenu" prefHeight="480.0" prefWidth="518.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -35,7 +27,7 @@
                         <Button fx:id="btnLogin" alignment="CENTER" layoutX="40.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnLoginClicked" prefHeight="38.0" prefWidth="264.0" style="-fx-background-color: #45b6fe;" text="LOGIN TO ACCOUNT" textFill="WHITE" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                         <ImageView fx:id="imgTitle" fitHeight="126.0" fitWidth="200.0" layoutX="77.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="70.0">
                            <image>
-                              <Image url="@../../../images/bankImg.jpg" />
+                              <Image url="@../../images/bankImg.jpg" />
                            </image>
                         </ImageView>
                         <Label fx:id="lblUsername" layoutX="138.0" layoutY="185.0" text="Username" textAlignment="CENTER" AnchorPane.leftAnchor="138.0" AnchorPane.rightAnchor="134.0" />

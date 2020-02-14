@@ -1,12 +1,12 @@
 module server {
-    requires java.rmi; // for RMI object
-    requires javafx.controls; // for FX
-    requires javafx.fxml; // for FXML
-    requires java.desktop; // for XMLSerialization
+    requires java.rmi;
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires java.desktop;
 
-    opens server.app to javafx.fxml; // server.app uses fxml
-    exports server.app to javafx.graphics; // give access to FX graphics
-    opens serverRMIDefinitions to java.rmi; // uses RMI
+    opens server.app to javafx.fxml;
+    exports server.app to javafx.graphics;
+    opens serverRMIDefinitions to java.rmi;
     exports userPackage;
     exports serverRMIDefinitions;
 }

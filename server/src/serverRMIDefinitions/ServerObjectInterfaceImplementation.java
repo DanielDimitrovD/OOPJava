@@ -116,7 +116,6 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
         streamByEncryption.writeToFile(cards);
     }
 
-
     // method to find if a card number exists in the data
     public String findCardNumber( String bankCard){
         String result = "";
