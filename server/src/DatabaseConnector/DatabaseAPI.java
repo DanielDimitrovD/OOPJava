@@ -71,12 +71,27 @@ public class DatabaseAPI {
             return Privileges.ADMIN;
     }
 
-    public void insertCardNumberEncryptionInDatabase(String username,String cardNumber,String encryptionNumber) throws SQLException {
-        preparedStatement = connection.prepareStatement("INSERT INTO credentials (userAccount,cardNumber,encryptionNumber) VALUES (?,?,?)");
+    public boolean insertCardNumberEncryptionInDatabase(String username,String cardNumber,String encryptionNumber) throws SQLException {
+
+        preparedStatement = connection.prepareStatement("SELECT userAccount,cardNumber FROM credentials WHERE userAccount = ? AND cardNumber = ?");
         preparedStatement.setString(1,username);
         preparedStatement.setString(2,cardNumber);
-        preparedStatement.setString(3,encryptionNumber);
 
-        preparedStatement.executeUpdate();
+        resultSet = preparedStatement.executeQuery();
+
+        if( resultSet.next()){
+            return false;
+        }
+
+        else {
+
+            preparedStatement = connection.prepareStatement("INSERT INTO credentials (userAccount,cardNumber,encryptionNumber) VALUES (?,?,?)");
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, cardNumber);
+            preparedStatement.setString(3, encryptionNumber);
+
+            preparedStatement.executeUpdate();
+            return true;
+        }
     }
 }

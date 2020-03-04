@@ -42,34 +42,16 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     private boolean isEmpty;
 
     public ServerObjectInterfaceImplementation() throws RemoteException, IOException {
-   //     pathToCredentialsFile = "data.xml"; // set XML config file location
-   //     userCredentials = new HashMap<>(); // initialize hashMap
         streamByCard = new BankCardByCardNumberStream(); // initialize I/O for data sorted by card number
         streamByEncryption = new BankCardByEncryptionStream(); // initialize I/O for data sorted by encryption number
         xmlSerialization = new XMLSerialization( pathToCredentialsFile); // initialize xml I/O instance
         encryptions = new TreeMap<>(); // initialize treeMap
-    //    initializeMap(); // fill map with users
-    //    initializeEncryptions();
-
         // UPDATE
 
         databaseConnection = new DatabaseAPI();
         substitutionCard = new SubstitutionCard(INITIAL_OFFSET);
     }
 
-
-    // function to initialize encryption's
-    public void initializeEncryptions() throws IOException, RemoteException{
-        String temp = streamByCard.readFromFileWithoutFormat(); // get sorted by card number (card number -> encryption)
-        temp = temp.replaceAll("\\n"," "); // reformatting
-        temp = temp.replaceAll("\\r",""); // reformatting
-        String[] parse = temp.split(" "); // split string to parts
-        for ( int i=0; i< parse.length-1; i+=2){ // constructing pair (encryption,card number)
-            String encryptionNumber = parse[i+1];
-            String bankCardNumber = parse[i];
-            encryptions.put(encryptionNumber,bankCardNumber); // adding data to treeMap
-        }
-    }
 
     // initialize userCredentials
     private final void initializeMap() throws IOException, RemoteException {
@@ -93,21 +75,7 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
             }
         }
     }
-    // function that counts number of errors for Bank card number
-    private int countEncryptions(String cardNumber){
-        int counter = 0;
 
-        // get entry set of encryption pairs ( encryption, card number)
-        Set<Map.Entry<String,String>> entry = encryptions.entrySet();
-
-        // iterate and check if value equals card number and increment counter
-        for ( Map.Entry<String,String> i : entry){
-            if(i.getValue().equals(cardNumber)){
-                counter++;
-            }
-        }
-        return counter;
-    }
     // write cards and their encryption's in file, sorted by card number
     public void writeSortedByCardNumber(){
         TreeSet<String> bankCards = new TreeSet<>();
@@ -144,8 +112,10 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     @Override
     public  String encryptCardNumber(String username, String cardNumber) throws RemoteException, SQLException {
         String encryptedCardNumber = substitutionCard.encrypt(cardNumber);
-        databaseConnection.insertCardNumberEncryptionInDatabase(username,cardNumber,encryptedCardNumber);
-        return encryptedCardNumber;
+        if(databaseConnection.insertCardNumberEncryptionInDatabase(username,cardNumber,encryptedCardNumber))
+           return encryptedCardNumber;
+        else
+            return "User already encrypted this credit card number";
     }
     // decryption of card Number
     @Override

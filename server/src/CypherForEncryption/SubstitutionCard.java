@@ -1,12 +1,16 @@
 package CypherForEncryption;
 
+import java.util.Random;
+
 // class used for encryption of bank number
 public class SubstitutionCard {
     private int offset; // offset of substitution Cypher
     private final StringBuilder sb; // string builder
+    private Random randomNumber;
 
     public SubstitutionCard(int offset) {
-        this.offset = offset;
+        randomNumber = new Random();
+        this.offset = randomNumber.nextInt(11);
         sb = new StringBuilder();
     }
 
