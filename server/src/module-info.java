@@ -3,6 +3,7 @@ module server {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires java.sql;
 
     opens server.app to javafx.fxml;
     exports server.app to javafx.graphics;

@@ -92,27 +92,29 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/userGUI" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mysql-connector-java-8.0.19/mysql-connector-java-8.0.19/mysql-connector-java-8.0.19.jar!/" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\encryptionProject\client\src\userGUI" />
-      <recent name="D:\encryptionProject\server\src\server\Socket" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OOP_Project_No4_62121\encryptionProject\client\src\images" />
+      <recent name="D:\OOP_Project_No4_62121\encryptionProject\client\src" />
+      <recent name="D:\encryptionProject\client\images" />
+      <recent name="D:\encryptionProject\client\src\images" />
+      <recent name="D:\encryptionProject\server" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="server.Socket" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\encryptionProject\client\images" />
-      <recent name="D:\encryptionProject\client\src\images" />
-      <recent name="D:\encryptionProject\server" />
-      <recent name="D:\encryptionProject\server\src" />
-      <recent name="D:\encryptionProject\server\src\serverData" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\OOP_Project_No4_62121\encryptionProject\libs" />
+      <recent name="D:\OOP_Project_No4_62121\encryptionProject\client\libs" />
+      <recent name="D:\encryptionProject\client\src\userGUI" />
+      <recent name="D:\encryptionProject\server\src\server\Socket" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Client">
@@ -301,7 +303,12 @@
       <workItem from="1581521429741" duration="22025000" />
       <workItem from="1581548996411" duration="1584000" />
       <workItem from="1581577800864" duration="39847000" />
-      <workItem from="1581665627433" duration="35457000" />
+      <workItem from="1581665627433" duration="35872000" />
+      <workItem from="1581706435348" duration="788000" />
+      <workItem from="1581707317038" duration="244000" />
+      <workItem from="1581707596437" duration="2592000" />
+      <workItem from="1582740538181" duration="322000" />
+      <workItem from="1583337454415" duration="2351000" />
     </task>
     <servers />
   </component>
@@ -321,10 +328,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="178" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1581687126019" />
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581690801139">
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581707681512">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581690801139" />
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581707681512" />
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1581696312223">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -337,26 +344,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="756" y="379" width="408" height="291" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1581544079468" />
-    <state x="666" y="261" key="FileChooserDialogImpl" timestamp="1581695257492">
+    <state x="666" y="261" key="FileChooserDialogImpl" timestamp="1583339289929">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1581695257492" />
-    <state width="1860" height="278" key="GridCell.Tab.0.bottom" timestamp="1581705432646">
+    <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1583339289929" />
+    <state width="1860" height="278" key="GridCell.Tab.0.bottom" timestamp="1581713319434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581705432646" />
-    <state width="1860" height="278" key="GridCell.Tab.0.center" timestamp="1581705432645">
+    <state width="1860" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1581713319434" />
+    <state width="1860" height="278" key="GridCell.Tab.0.center" timestamp="1581713319434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581705432645" />
-    <state width="1860" height="278" key="GridCell.Tab.0.left" timestamp="1581705432645">
+    <state width="1860" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1581713319434" />
+    <state width="1860" height="278" key="GridCell.Tab.0.left" timestamp="1581713319434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581705432645" />
-    <state width="1860" height="278" key="GridCell.Tab.0.right" timestamp="1581705432646">
+    <state width="1860" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1581713319434" />
+    <state width="1860" height="278" key="GridCell.Tab.0.right" timestamp="1581713319434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581705432646" />
+    <state width="1860" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581713319434" />
     <state width="1860" height="344" key="GridCell.Tab.1.bottom" timestamp="1581695608104">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -373,18 +380,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="344" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1581695608104" />
-    <state x="354" y="150" key="SettingsEditor" timestamp="1581698033982">
+    <state x="354" y="150" key="SettingsEditor" timestamp="1583339299068">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="354" y="150" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1581698033982" />
+    <state x="354" y="150" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583339299068" />
     <state x="776" y="297" key="chooseDestDirectoryDialog" timestamp="1581357112858">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="776" y="297" key="chooseDestDirectoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581357112858" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1581665644384">
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1583338271410">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581665644384" />
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583338271410" />
     <state x="864" y="315" key="extract.method.dialog" timestamp="1581411161265">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
