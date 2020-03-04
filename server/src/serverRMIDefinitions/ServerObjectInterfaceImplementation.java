@@ -4,7 +4,6 @@ import DatabaseConnector.DatabaseAPI;
 import filesOperations.BankCardByCardNumberStream;
 import filesOperations.BankCardByEncryptionStream;
 import filesOperations.XMLSerialization;
-import javafx.scene.chart.PieChart;
 import substitutionCypher.EncryptCard;
 import userPackage.Privileges;
 import userPackage.User;
@@ -14,9 +13,6 @@ import Utilities.Utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -206,13 +202,6 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     // validate if a client can continue to the main client functionality
     @Override
     public final boolean validateUser(String username, String password) throws RemoteException {
-   /*     if (userCredentials.containsKey(username)) {  // check if username is registered in Credentials
-            if (userCredentials.get(username).getPassword().equals(password)) // check if username has specified password
-                return true; // client is in database
-        }
-
-        return false; // client isn't registered in database
-    */
         try {
             if(databaseConnection.validateUserLogin(username, password))
                 return true;
@@ -226,8 +215,8 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
 
     // add account to database
     @Override
-    public final void addUser(String username, String password, Privileges privileges) throws RemoteException {
-
+    public final boolean addUser(String username, String password, Privileges privileges) throws RemoteException {
+/*
         // check if username is inserted already
         if (userCredentials.containsKey(username)) {
             return;  // don't enter user in database
@@ -244,5 +233,14 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
         } catch (IOException e) {
             e.printStackTrace();
         } // catch end
+
+ */
+     try {
+         databaseConnection.addUserInDatabase(username, password, privileges);
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+
+        return false;
     } // method addUser end
 } // class end

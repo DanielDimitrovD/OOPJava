@@ -87,10 +87,16 @@ public class Controller {
             txtUsername.requestFocus(); // request focus on username textField
         } else {  // input is valid
 
-                serverObjectInterface.addUser(txtUsername.getText(), txtPassword.getText(), cmbPrivilege.getValue()); // add user to database
+                if(serverObjectInterface.addUser(txtUsername.getText(), txtPassword.getText(), cmbPrivilege.getValue()))
+                {// add user to database
                 showMessage(Alert.AlertType.INFORMATION, "Adding account to server", "Account added successfully",
-                        String.format("Username: {%s}%nPassword: {%s}%nPrivileges: {%s}%n",username,password,privilege));
-            }
+                       String.format("Username: {%s}%nPassword: {%s}%nPrivileges: {%s}%n",username,password,privilege));
+                }
+                else{
+                    showMessage(Alert.AlertType.ERROR,"Adding account to server","Error adding account",
+                            String.format("Account with username %s already exists.",txtUsername.getText()));
+                }
+        }
     }
 
     @FXML

@@ -13,5 +13,5 @@ public interface ServerObjectInterface extends Remote {
     // validation of user
     boolean validateUser(String username,String password) throws RemoteException;
     // adding user to database
-    void addUser(String username, String password, Privileges privileges) throws RemoteException;
+    boolean addUser(String username, String password, Privileges privileges) throws RemoteException;
 }
