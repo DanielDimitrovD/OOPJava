@@ -1,8 +1,10 @@
 package serverRMIDefinitions;
 
+import DatabaseConnector.DatabaseAPI;
 import filesOperations.BankCardByCardNumberStream;
 import filesOperations.BankCardByEncryptionStream;
 import filesOperations.XMLSerialization;
+import javafx.scene.chart.PieChart;
 import substitutionCypher.EncryptCard;
 import userPackage.Privileges;
 import userPackage.User;
@@ -18,6 +20,7 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.*;
 
 // implementation of the RMI service interface
@@ -34,17 +37,28 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     private BankCardByEncryptionStream streamByEncryption; // used for I/O operations with data sorted by encryption number
     private StringBuilder sb; // string builder for manipulation of strings
 
+
+    // UPDATE
+    private DatabaseAPI databaseConnection;
+
+
+
     private boolean isEmpty;
 
     public ServerObjectInterfaceImplementation() throws RemoteException, IOException {
-        pathToCredentialsFile = "data.xml"; // set XML config file location
-        userCredentials = new HashMap<>(); // initialize hashMap
+   //     pathToCredentialsFile = "data.xml"; // set XML config file location
+   //     userCredentials = new HashMap<>(); // initialize hashMap
         streamByCard = new BankCardByCardNumberStream(); // initialize I/O for data sorted by card number
         streamByEncryption = new BankCardByEncryptionStream(); // initialize I/O for data sorted by encryption number
         xmlSerialization = new XMLSerialization( pathToCredentialsFile); // initialize xml I/O instance
         encryptions = new TreeMap<>(); // initialize treeMap
-        initializeMap(); // fill map with users
-        initializeEncryptions();
+    //    initializeMap(); // fill map with users
+    //    initializeEncryptions();
+
+        // UPDATE
+
+        databaseConnection = new DatabaseAPI();
+
     }
 
 
@@ -192,11 +206,22 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     // validate if a client can continue to the main client functionality
     @Override
     public final boolean validateUser(String username, String password) throws RemoteException {
-        if (userCredentials.containsKey(username)) {  // check if username is registered in Credentials
+   /*     if (userCredentials.containsKey(username)) {  // check if username is registered in Credentials
             if (userCredentials.get(username).getPassword().equals(password)) // check if username has specified password
                 return true; // client is in database
         }
+
         return false; // client isn't registered in database
+    */
+        try {
+            if(databaseConnection.validateUserLogin(username, password))
+                return true;
+            else
+                return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // add account to database

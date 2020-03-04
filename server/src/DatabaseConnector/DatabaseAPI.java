@@ -23,11 +23,13 @@ public class DatabaseAPI {
         preparedStatement = connection.prepareStatement(" SELECT username, password FROM login WHERE username = ? AND password = ? ");
         preparedStatement.setString(1,username);
         preparedStatement.setString(2,password);
-        preparedStatement.execute();
 
-        if( preparedStatement == null)
-            return false;
-        else
+        resultSet = preparedStatement.executeQuery();
+        connection.close();
+
+        if( resultSet.next())
             return true;
+        else
+            return false;
     }
 }
