@@ -3,11 +3,12 @@ import userPackage.Privileges;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 // interface for RMI service
 public interface ServerObjectInterface extends Remote {
     // encryption of card number
-    String encryptCardNumber(String username,String cardNumber) throws RemoteException;
+    String encryptCardNumber(String username,String cardNumber) throws RemoteException, SQLException;
     // decryption of card number
     String decryptCardNumber(String username,String cardNumber) throws RemoteException;
     // validation of user

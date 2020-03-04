@@ -4,7 +4,7 @@ import DatabaseConnector.DatabaseAPI;
 import filesOperations.BankCardByCardNumberStream;
 import filesOperations.BankCardByEncryptionStream;
 import filesOperations.XMLSerialization;
-import substitutionCypher.EncryptCard;
+import CypherForEncryption.SubstitutionCard;
 import userPackage.Privileges;
 import userPackage.User;
 import userPackage.Users;
@@ -36,7 +36,7 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
 
     // UPDATE
     private DatabaseAPI databaseConnection;
-
+    private SubstitutionCard substitutionCard;
 
 
     private boolean isEmpty;
@@ -54,7 +54,7 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
         // UPDATE
 
         databaseConnection = new DatabaseAPI();
-
+        substitutionCard = new SubstitutionCard(INITIAL_OFFSET);
     }
 
 
@@ -142,41 +142,10 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     }
 
     @Override
-    public  String encryptCardNumber(String username, String cardNumber) throws RemoteException {
-        String result = "";
-        Privileges privilege = userCredentials.get(username).getPrivileges(); // get username privilege
-        if (privilege.equals(Privileges.GUEST)) // check if user has functionality for encryption method
-        {
-            result = "Guests don't have encryption functionality!";
-            return result;
-        }
-        if (!Utils.verifyCardNumber(cardNumber) | !Utils.verifyLuhn(cardNumber)) {// check if card number is valid
-            result = "Invalid bank card! Enter information again.";
-            return result;
-        }
-
-        int count = countEncryptions(cardNumber); // check number of occurrences of current card number
-
-        EncryptCard encryptCard; // declare encryption class
-
-        if(count > 12) { // limitations for occurrences of card numbers in data
-            result = "No more than 11 times can you encrypt the same card";
-            return result;
-        }
-        else { // count <= 11
-            if( count == 0)
-                encryptCard = new EncryptCard(INITIAL_OFFSET);
-            else if( count >= 1 && count <= 10)
-                encryptCard = new EncryptCard(INITIAL_OFFSET + count);
-            else { // count == 11
-                encryptCard = new EncryptCard(INITIAL_OFFSET - 1);  // (INITIAL_OFFSET + 11 == 16 ) % 16 equals = 0 which gives no offset
-            } // end else count == 11
-            result = encryptCard.encrypt(cardNumber); // encrypt card number
-            encryptions.put(result,cardNumber); // add (encrypted card number, bank card number) pair to map
-            writeSortedByCardNumber(); // write to file sorted by card number
-            writeSortedByEncryption(); // write to file sorted by encryption number
-            return result;
-        }
+    public  String encryptCardNumber(String username, String cardNumber) throws RemoteException, SQLException {
+        String encryptedCardNumber = substitutionCard.encrypt(cardNumber);
+        databaseConnection.insertCardNumberEncryptionInDatabase(username,cardNumber,encryptedCardNumber);
+        return encryptedCardNumber;
     }
     // decryption of card Number
     @Override
@@ -216,31 +185,14 @@ public class ServerObjectInterfaceImplementation extends UnicastRemoteObject imp
     // add account to database
     @Override
     public final boolean addUser(String username, String password, Privileges privileges) throws RemoteException {
-/*
-        // check if username is inserted already
-        if (userCredentials.containsKey(username)) {
-            return;  // don't enter user in database
-        }
-
-        try {
-
-            Users users = xmlSerialization.readXML();
-            users.addUser(new User(username, password, privileges));  // put new User in Users collection
-
-            userCredentials.put(username, new User(username, password, privileges)); // put new User in credentials table
-            xmlSerialization.writeXML(users) ;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } // catch end
-
- */
      try {
-         databaseConnection.addUserInDatabase(username, password, privileges);
+         if(databaseConnection.addUserInDatabase(username, password, privileges))
+             return true;
+         else
+             return false;
      } catch (SQLException e) {
          e.printStackTrace();
      }
-
         return false;
     } // method addUser end
 } // class end

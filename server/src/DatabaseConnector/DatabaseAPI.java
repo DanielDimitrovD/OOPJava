@@ -7,7 +7,6 @@ import java.sql.*;
 public class DatabaseAPI {
     private Connection connection;
     private PreparedStatement preparedStatement;
-    private Statement statement;
     private ResultSet resultSet;
 
     public DatabaseAPI() {
@@ -27,7 +26,6 @@ public class DatabaseAPI {
         preparedStatement.setString(2,password);
 
         resultSet = preparedStatement.executeQuery();
-        connection.close();
 
         if( resultSet.next())
             return true;
@@ -55,5 +53,30 @@ public class DatabaseAPI {
             preparedStatement.executeUpdate();
             return true;
         }
+    }
+
+    public Privileges getUserPrivilegesFromDatabase(String username) throws SQLException {
+        preparedStatement = connection.prepareStatement("SELECT type FROM login WHERE username = ?");
+        preparedStatement.setString(1,username);
+
+        resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        String resultPrivileges = resultSet.getString(1);
+
+        if( resultPrivileges.equals(Privileges.GUEST))
+            return Privileges.GUEST;
+        else if( resultPrivileges.equals(Privileges.USER))
+            return Privileges.USER;
+        else
+            return Privileges.ADMIN;
+    }
+
+    public void insertCardNumberEncryptionInDatabase(String username,String cardNumber,String encryptionNumber) throws SQLException {
+        preparedStatement = connection.prepareStatement("INSERT INTO credentials (userAccount,cardNumber,encryptionNumber) VALUES (?,?,?)");
+        preparedStatement.setString(1,username);
+        preparedStatement.setString(2,cardNumber);
+        preparedStatement.setString(3,encryptionNumber);
+
+        preparedStatement.executeUpdate();
     }
 }

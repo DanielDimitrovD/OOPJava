@@ -6,6 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
 
 import clientUtils.Utilities;
 import javafx.application.Platform;
@@ -152,7 +153,7 @@ public class Controller {
                     showMessage(Alert.AlertType.INFORMATION,"Encryption of card number","Information about current operation.",
                             result);
                 }
-            } catch (RemoteException e) {
+            } catch (RemoteException | SQLException e) {
                 showMessage(Alert.AlertType.ERROR,"Encryption of card number","Server host unavailable.",
                         "Please try again later.");
                 Platform.exit();

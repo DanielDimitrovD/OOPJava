@@ -1,13 +1,12 @@
-package substitutionCypher;
+package CypherForEncryption;
 
 // class used for encryption of bank number
-public class EncryptCard {
+public class SubstitutionCard {
     private int offset; // offset of substitution Cypher
     private final StringBuilder sb; // string builder
 
-    public EncryptCard(int offset) {
+    public SubstitutionCard(int offset) {
         this.offset = offset;
-        offset %= 16;
         sb = new StringBuilder();
     }
 
@@ -21,6 +20,7 @@ public class EncryptCard {
         for (int i = 0; i < cardNumber.length(); i++) { // encrypting card number
             sb.append((int) (cardNumber.charAt(i) - '0' + offset) % 10);
         }
+        offset++;
         return sb.toString();
     }
 }
