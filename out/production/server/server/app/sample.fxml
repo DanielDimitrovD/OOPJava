@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -147,6 +148,11 @@
                                 <columns>
                                 </columns>
                               </TableView>
+                              <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                                <buttons>
+                                  <Button fx:id="btnViewUsers" mnemonicParsing="false" onAction="#btnViewUsersClicked" text="View Users" />
+                                </buttons>
+                              </ButtonBar>
                                 </children>
                             </VBox>
                         </children></AnchorPane>

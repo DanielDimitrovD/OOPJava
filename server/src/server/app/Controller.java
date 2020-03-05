@@ -31,12 +31,10 @@ public class Controller {
     private ServerObjectInterface serverObjectInterface; // interface object
     private Registry registry; // registry to bind
 
-    private String pathToCredentials; // path to XML file with user data
-    private boolean isEmpty;  // if XML file is empty
 
     private DatabaseAPI connectionToDatabase;
 
-    private ObservableList<Person> data;
+    private ObservableList data;
 
     @FXML
     private Label lblAccountInfo;
@@ -66,10 +64,7 @@ public class Controller {
     private TextArea txaLog;
 
     @FXML
-    private Label lblTableView;
-
-    @FXML
-    private TableView<Person> tbvTableView;
+    private TableView tbvTableView;
 
     // add account to database in server side
     @FXML
@@ -149,33 +144,23 @@ public class Controller {
         serverObjectInterface = (ServerObjectInterface) registry.lookup("ServerObjectInterfaceImplementation");
         connectionToDatabase = new DatabaseAPI();
 
-        setTableViewConfigurations();
-
-        pathToCredentials = "data.xml";
-        isEmpty = ( Files.size(Paths.get(pathToCredentials)) == 0); // check if file is empty
-        assert lblAccountInfo != null : "fx:id=\"lblAccountInfo\" was not injected: check your FXML file 'sample.fxml'.";
-        assert lblUsername != null : "fx:id=\"lblUsername\" was not injected: check your FXML file 'sample.fxml'.";
-        assert lblPassword != null : "fx:id=\"lblPassword\" was not injected: check your FXML file 'sample.fxml'.";
-        assert lblPrivilege != null : "fx:id=\"lblPrivilege\" was not injected: check your FXML file 'sample.fxml'.";
-        assert txtUsername != null : "fx:id=\"txtUsername\" was not injected: check your FXML file 'sample.fxml'.";
-        assert txtPassword != null : "fx:id=\"txtPassword\" was not injected: check your FXML file 'sample.fxml'.";
-        assert cmbPrivilege != null : "fx:id=\"cmbPrivilege\" was not injected: check your FXML file 'sample.fxml'.";
-        assert btnAddAccount != null : "fx:id=\"btnAddAccount\" was not injected: check your FXML file 'sample.fxml'.";
-
         cmbPrivilege.setItems(options);
     }
 
-    private void setTableViewConfigurations() throws SQLException {
-        tbvTableView.setEditable(true);
+    private void setTableViewUsersData() throws SQLException {
+        tbvTableView.getItems().clear();
+        tbvTableView.refresh();
 
         data = FXCollections.observableArrayList();
         ArrayList<Person> personList = connectionToDatabase.getPeopleDataFromDatabase();
-
-        for( Person p: personList){
-            data.add(p);
-        }
-
+        data.addAll(personList);
         tbvTableView.setItems(data);
+
+    }
+
+    private void setTableViewUsersColumns() throws SQLException{
+        tbvTableView.getColumns().clear();
+        tbvTableView.refresh();
 
         TableColumn usernameColumn = new TableColumn("Username");
         usernameColumn.setMinWidth(100);
@@ -187,9 +172,15 @@ public class Controller {
 
         TableColumn privilegesColumn = new TableColumn("Privileges");
         privilegesColumn.setMinWidth(100);
-        privilegesColumn    .setCellValueFactory( new PropertyValueFactory<Person,String>("privileges"));
+        privilegesColumn.setCellValueFactory( new PropertyValueFactory<Person,String>("privileges"));
 
-       tbvTableView.getColumns().addAll(usernameColumn,passwordColumn,privilegesColumn);
-
+        tbvTableView.getColumns().addAll(usernameColumn,passwordColumn,privilegesColumn);
     }
+
+    @FXML
+    void btnViewUsersClicked(ActionEvent event) throws SQLException {
+        setTableViewUsersColumns();
+        setTableViewUsersData();
+    }
+
 }
