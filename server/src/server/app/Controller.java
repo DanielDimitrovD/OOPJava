@@ -23,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import serverRMIDefinitions.*;
 import userPackage.Person;
 import userPackage.Privileges;
+import userPackage.UserCardNumber;
 
 import static Utilities.Utils.showMessage;
 
@@ -66,6 +67,8 @@ public class Controller {
     @FXML
     private TableView tbvTableView;
 
+    @FXML
+    private Button btnViewCardNumbers;
     // add account to database in server side
     @FXML
     void btnAddAccountClicked(ActionEvent event) throws IOException {
@@ -181,6 +184,41 @@ public class Controller {
     void btnViewUsersClicked(ActionEvent event) throws SQLException {
         setTableViewUsersColumns();
         setTableViewUsersData();
+    }
+
+    private void setTableViewCardNumberColumns() throws SQLException{
+        tbvTableView.getColumns().clear();
+        tbvTableView.refresh();
+
+        TableColumn usernameColumn = new TableColumn("Username");
+        usernameColumn.setMinWidth(100);
+        usernameColumn.setCellValueFactory( new PropertyValueFactory<UserCardNumber,String>("username"));
+
+        TableColumn cardNumberColumn = new TableColumn("Card Number");
+        cardNumberColumn.setMinWidth(100);
+        cardNumberColumn.setCellValueFactory( new PropertyValueFactory<UserCardNumber,String>("cardNumber"));
+
+        TableColumn encryptionNumber = new TableColumn("Encrypted Number");
+        encryptionNumber.setMinWidth(100);
+        encryptionNumber.setCellValueFactory( new PropertyValueFactory<Person,String>("encryptionNumber"));
+
+        tbvTableView.getColumns().addAll(usernameColumn,cardNumberColumn,encryptionNumber);
+    }
+
+    private void setTableViewCardNumberData() throws SQLException {
+        tbvTableView.getItems().clear();
+        tbvTableView.refresh();
+
+        data = FXCollections.observableArrayList();
+        ArrayList<UserCardNumber> userCardNumberArrayList = connectionToDatabase.getUserCardNumberDataFromDatabase();
+        data.addAll(userCardNumberArrayList);
+        tbvTableView.setItems(data);
+    }
+
+    @FXML
+    void btnViewCardNumbersClicked(ActionEvent event) throws SQLException {
+        setTableViewCardNumberColumns();
+        setTableViewCardNumberData();
     }
 
 }

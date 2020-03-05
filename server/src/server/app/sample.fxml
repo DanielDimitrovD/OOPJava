@@ -151,6 +151,7 @@
                               <ButtonBar prefHeight="40.0" prefWidth="200.0">
                                 <buttons>
                                   <Button fx:id="btnViewUsers" mnemonicParsing="false" onAction="#btnViewUsersClicked" text="View Users" />
+                                    <Button fx:id="btnViewCardNumbers" mnemonicParsing="false" onAction="#btnViewCardNumbersClicked" text="View Card Numbers" />
                                 </buttons>
                               </ButtonBar>
                                 </children>

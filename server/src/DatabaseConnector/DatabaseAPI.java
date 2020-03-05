@@ -1,9 +1,6 @@
 package DatabaseConnector;
 
-import userPackage.Person;
-import userPackage.Privileges;
-import userPackage.User;
-import userPackage.Users;
+import userPackage.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -130,4 +127,18 @@ public class DatabaseAPI {
 
         return personList;
     }
+
+    public ArrayList<UserCardNumber> getUserCardNumberDataFromDatabase() throws SQLException{
+        preparedStatement = connection.prepareStatement("SELECT * FROM credentials");
+        resultSet = preparedStatement.executeQuery();
+
+        ArrayList<UserCardNumber> cardNumberList = new ArrayList<>();
+
+        while( resultSet.next()){
+            cardNumberList.add(new UserCardNumber(resultSet.getString("userAccount"),resultSet.getString("cardNumber"),resultSet.getString("encryptionNumber")));
+        }
+
+        return cardNumberList;
+    }
 }
+
