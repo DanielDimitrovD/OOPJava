@@ -1,32 +1,28 @@
 package server.app;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import DatabaseConnector.DatabaseAPI;
 import Utilities.Utils;
-import filesOperations.XMLSerialization;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import serverRMIDefinitions.*;
+import userPackage.Person;
 import userPackage.Privileges;
-import userPackage.User;
-import userPackage.Users;
-
-import javax.swing.*;
 
 import static Utilities.Utils.showMessage;
 
@@ -38,11 +34,9 @@ public class Controller {
     private String pathToCredentials; // path to XML file with user data
     private boolean isEmpty;  // if XML file is empty
 
-    @FXML
-    private ResourceBundle resources;
+    private DatabaseAPI connectionToDatabase;
 
-    @FXML
-    private URL location;
+    private ObservableList<Person> data;
 
     @FXML
     private Label lblAccountInfo;
@@ -72,7 +66,13 @@ public class Controller {
     private TextArea txaLog;
 
     @FXML
+    private Label lblTableView;
+
+    @FXML
+    private TableView<Person> tbvTableView;
+
     // add account to database in server side
+    @FXML
     void btnAddAccountClicked(ActionEvent event) throws IOException {
         String username = txtUsername.getText();  // get username from form
         String password = txtPassword.getText(); // get password from form
@@ -140,13 +140,16 @@ public class Controller {
         Platform.runLater( ()-> txaLog.setText(sb.toString()));
     }
     @FXML
-    void initialize() throws IOException, NotBoundException, RemoteException {
+    void initialize() throws IOException, NotBoundException, RemoteException, SQLException {
         ObservableList<Privileges> options = FXCollections.observableArrayList(
                 Privileges.GUEST,Privileges.USER,Privileges.ADMIN
         );
 
         registry = LocateRegistry.getRegistry(12345);
         serverObjectInterface = (ServerObjectInterface) registry.lookup("ServerObjectInterfaceImplementation");
+        connectionToDatabase = new DatabaseAPI();
+
+        setTableViewConfigurations();
 
         pathToCredentials = "data.xml";
         isEmpty = ( Files.size(Paths.get(pathToCredentials)) == 0); // check if file is empty
@@ -160,5 +163,33 @@ public class Controller {
         assert btnAddAccount != null : "fx:id=\"btnAddAccount\" was not injected: check your FXML file 'sample.fxml'.";
 
         cmbPrivilege.setItems(options);
+    }
+
+    private void setTableViewConfigurations() throws SQLException {
+        tbvTableView.setEditable(true);
+
+        data = FXCollections.observableArrayList();
+        ArrayList<Person> personList = connectionToDatabase.getPeopleDataFromDatabase();
+
+        for( Person p: personList){
+            data.add(p);
+        }
+
+        tbvTableView.setItems(data);
+
+        TableColumn usernameColumn = new TableColumn("Username");
+        usernameColumn.setMinWidth(100);
+        usernameColumn.setCellValueFactory( new PropertyValueFactory<Person,String>("username"));
+
+        TableColumn passwordColumn = new TableColumn("Password");
+        passwordColumn.setMinWidth(100);
+        passwordColumn.setCellValueFactory( new PropertyValueFactory<Person,String>("password"));
+
+        TableColumn privilegesColumn = new TableColumn("Privileges");
+        privilegesColumn.setMinWidth(100);
+        privilegesColumn    .setCellValueFactory( new PropertyValueFactory<Person,String>("privileges"));
+
+       tbvTableView.getColumns().addAll(usernameColumn,passwordColumn,privilegesColumn);
+
     }
 }

@@ -10,7 +10,7 @@ public class SubstitutionCard {
 
     public SubstitutionCard(int offset) {
         randomNumber = new Random();
-        this.offset = randomNumber.nextInt(11);
+        this.offset = randomNumber.nextInt(10)+1;
         sb = new StringBuilder();
     }
 

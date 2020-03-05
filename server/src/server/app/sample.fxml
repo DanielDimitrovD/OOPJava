@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -117,6 +118,35 @@
                                     <Font size="11.0" />
                                  </font>
                               </Button>
+                                </children>
+                            </VBox>
+                        </children></AnchorPane>
+                </content>
+            </Tab>
+            <Tab closable="false" text="Display Data">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <VBox layoutX="118.0" layoutY="59.0" prefHeight="367.0" prefWidth="335.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <children>
+                                    <Label fx:id="lblTableView" text="Table view">
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="95.0" right="5.0" top="5.0" />
+                                        </VBox.margin>
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </padding>
+                                        <font>
+                                            <Font size="14.0" />
+                                        </font>
+                                    </Label>
+                                    <Separator prefHeight="0.0" prefWidth="335.0" />
+                                    <Separator prefHeight="0.0" prefWidth="335.0" />
+                                    <Separator prefWidth="200.0" />
+                              <TableView fx:id="tbvTableView" prefHeight="260.0" prefWidth="335.0">
+                                <columns>
+                                </columns>
+                              </TableView>
                                 </children>
                             </VBox>
                         </children></AnchorPane>

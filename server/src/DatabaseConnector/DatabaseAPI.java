@@ -1,8 +1,13 @@
 package DatabaseConnector;
 
+import userPackage.Person;
 import userPackage.Privileges;
+import userPackage.User;
+import userPackage.Users;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class DatabaseAPI {
     private Connection connection;
@@ -35,7 +40,6 @@ public class DatabaseAPI {
 
     public boolean addUserInDatabase(String username, String password, Privileges privileges) throws SQLException {
 
-       // statement = connection.createStatement();
         preparedStatement = connection.prepareStatement("SELECT username FROM login WHERE username = ?");
         preparedStatement.setString(1,username);
         resultSet = preparedStatement.executeQuery();
@@ -93,5 +97,37 @@ public class DatabaseAPI {
             preparedStatement.executeUpdate();
             return true;
         }
+    }
+
+    public String listUsersFromDatabase() throws SQLException {
+        preparedStatement = connection.prepareStatement("SELECT username,password,type FROM login");
+        resultSet = preparedStatement.executeQuery();
+
+        Users usersWrapperClass = new Users();
+
+        while(resultSet.next()){
+            User currentUser = new User(resultSet.getString("username"),resultSet.getString("password"),Privileges.valueOf(resultSet.getString("type")));
+            usersWrapperClass.addUser(currentUser);
+        }
+
+        String resultUsernameDataString = usersWrapperClass.getUsers()
+                .stream()
+                .map(User::toString)
+                .collect(Collectors.joining("\n"));
+
+        return resultUsernameDataString;
+    }
+
+    public ArrayList<Person> getPeopleDataFromDatabase() throws SQLException {
+        preparedStatement = connection.prepareStatement("SELECT * FROM login");
+        resultSet = preparedStatement.executeQuery();
+
+        ArrayList<Person> personList = new ArrayList<>();
+
+        while( resultSet.next()){
+            personList.add(new Person(resultSet.getString("username"),resultSet.getString("password"),resultSet.getString("type")));
+        }
+
+        return personList;
     }
 }
