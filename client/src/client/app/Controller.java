@@ -27,51 +27,18 @@ public class Controller {
     private PasswordField txtPassword;
 
     @FXML
-    private Label lblTitle;
-
-    @FXML
     private Label lblOperationsUsername;
     @FXML
     private TextField txtUsername;
 
     @FXML
-    private Button btnLogin;
-
-    @FXML
-    private ImageView imgTitle;
-
-    @FXML
-    private Label lblUsername;
-
-    @FXML
-    private Label lblPassword;
-
-    @FXML
     private ImageView imgTitle1;
-
-    @FXML
-    private Label lblEncrypt;
 
     @FXML
     private TextField txtEncrypt;
 
     @FXML
-    private Label lblDercypt;
-
-    @FXML
     private TextField txtDecrypt;
-
-    @FXML
-    private Button btnEncrypt;
-
-    @FXML
-    private Button btnQuit;
-
-    @FXML
-    private Button btnDecrypt;
-
-    @FXML
-    private Tab tabLogin;
 
     @FXML
     private Tab tabOperations;
@@ -127,7 +94,7 @@ public class Controller {
                 showMessage(Alert.AlertType.INFORMATION, "Decryption of card number", "Information about decryption operation",
                         result);
             }
-        } catch (RemoteException e) {
+        } catch (RemoteException | SQLException e) {
               showMessage(Alert.AlertType.ERROR,"Encryption of card number","Server host unavailable.",
                       "Please try again later.");
               Platform.exit();
@@ -171,12 +138,6 @@ public class Controller {
 
     @FXML
     void initialize() throws RemoteException {
-        assert txtPassword != null : "fx:id=\"txtPassword\" was not injected: check your FXML file 'sample.fxml'.";
-        assert lblTitle != null : "fx:id=\"lblTitle\" was not injected: check your FXML file 'sample.fxml'.";
-        assert txtUsername != null : "fx:id=\"txtUsername\" was not injected: check your FXML file 'sample.fxml'.";
-        assert btnLogin != null : "fx:id=\"btnLogin\" was not injected: check your FXML file 'sample.fxml'.";
-        assert imgTitle != null : "fx:id=\"imgTitle\" was not injected: check your FXML file 'sample.fxml'.";
-
         try{
             registry = LocateRegistry.getRegistry(12345);
             server = (ServerObjectInterface)registry.lookup("ServerObjectInterfaceImplementation");

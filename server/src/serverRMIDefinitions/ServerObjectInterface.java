@@ -10,7 +10,7 @@ public interface ServerObjectInterface extends Remote {
     // encryption of card number
     String encryptCardNumber(String username,String cardNumber) throws RemoteException, SQLException;
     // decryption of card number
-    String decryptCardNumber(String username,String cardNumber) throws RemoteException;
+    String decryptCardNumber(String username,String cardNumber) throws RemoteException, SQLException;
     // validation of user
     boolean validateUser(String username,String password) throws RemoteException;
     // adding user to database

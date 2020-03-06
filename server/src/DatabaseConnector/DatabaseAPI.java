@@ -96,25 +96,6 @@ public class DatabaseAPI {
         }
     }
 
-    public String listUsersFromDatabase() throws SQLException {
-        preparedStatement = connection.prepareStatement("SELECT username,password,type FROM login");
-        resultSet = preparedStatement.executeQuery();
-
-        Users usersWrapperClass = new Users();
-
-        while(resultSet.next()){
-            User currentUser = new User(resultSet.getString("username"),resultSet.getString("password"),Privileges.valueOf(resultSet.getString("type")));
-            usersWrapperClass.addUser(currentUser);
-        }
-
-        String resultUsernameDataString = usersWrapperClass.getUsers()
-                .stream()
-                .map(User::toString)
-                .collect(Collectors.joining("\n"));
-
-        return resultUsernameDataString;
-    }
-
     public ArrayList<Person> getPeopleDataFromDatabase() throws SQLException {
         preparedStatement = connection.prepareStatement("SELECT * FROM login");
         resultSet = preparedStatement.executeQuery();
@@ -139,6 +120,18 @@ public class DatabaseAPI {
         }
 
         return cardNumberList;
+    }
+
+    public String getCardNumberByEncryptionNumberFromDatabase( String username,String encryptionNumber) throws SQLException{
+        preparedStatement = connection.prepareStatement("SELECT cardNumber FROM credentials WHERE userAccount = ? AND encryptionNumber = ?");
+        preparedStatement.setString(1,username);
+        preparedStatement.setString(2,encryptionNumber);
+        resultSet = preparedStatement.executeQuery();
+
+        if(!resultSet.next())
+            return "Wrong username or encryption number";
+
+        return resultSet.getString("cardNumber");
     }
 }
 

@@ -32,22 +32,8 @@ public class Controller {
     private ServerObjectInterface serverObjectInterface; // interface object
     private Registry registry; // registry to bind
 
-
     private DatabaseAPI connectionToDatabase;
-
     private ObservableList data;
-
-    @FXML
-    private Label lblAccountInfo;
-
-    @FXML
-    private Label lblUsername;
-
-    @FXML
-    private Label lblPassword;
-
-    @FXML
-    private Label lblPrivilege;
 
     @FXML
     private TextField txtUsername;
@@ -59,16 +45,11 @@ public class Controller {
     private ComboBox<Privileges> cmbPrivilege;
 
     @FXML
-    private Button btnAddAccount;
-
-    @FXML
     private TextArea txaLog;
 
     @FXML
     private TableView tbvTableView;
 
-    @FXML
-    private Button btnViewCardNumbers;
     // add account to database in server side
     @FXML
     void btnAddAccountClicked(ActionEvent event) throws IOException {
