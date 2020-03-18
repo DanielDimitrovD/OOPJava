@@ -48,4 +48,9 @@ public class UserCardNumber {
     public void setEncryptionNumber(String encryptionNumber) {
         this.encryptionNumber.set(encryptionNumber);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Username: %-10s Card Number: %-16s Encryption Number: %-16s",getUsername(),getCardNumber(),getEncryptionNumber());
+    }
 }

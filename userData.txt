@@ -1,0 +1,6 @@
+Username: Admin     Password:admin123   Privileges:ADMIN     
+Username: User      Password:user123    Privileges:USER      
+Username: Guest     Password:guest123   Privileges:GUEST     
+Username: daniel    Password:daniel123  Privileges:ADMIN     
+Username: pedro     Password:pedro123   Privileges:GUEST     
+Username: gedro     Password:gedro123   Privileges:USER      

@@ -4,7 +4,6 @@ import userPackage.*;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class DatabaseAPI {
     private Connection connection;

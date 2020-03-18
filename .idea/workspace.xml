@@ -117,7 +117,7 @@
       <recent name="D:\encryptionProject\server\src\server\Socket" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.Server">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -264,8 +264,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Client" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.Client" />
         <item itemvalue="JAR Application.jackson-dataformat-xml-2.10.2.jar" />
         <item itemvalue="Application.ClientLogin" />
         <item itemvalue="Application.BankServer" />
@@ -310,7 +310,9 @@
       <workItem from="1582740538181" duration="322000" />
       <workItem from="1583337454415" duration="11159000" />
       <workItem from="1583390939742" duration="7284000" />
-      <workItem from="1583481349902" duration="1980000" />
+      <workItem from="1583481349902" duration="2181000" />
+      <workItem from="1584464496396" duration="984000" />
+      <workItem from="1584522043348" duration="8737000" />
     </task>
     <servers />
   </component>
@@ -334,10 +336,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581707681512" />
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1583441744427">
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1584530294000">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1583441744427" />
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1584530294000" />
     <state x="843" y="309" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1581698031129">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -354,22 +356,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1583339289929" />
-    <state width="1860" height="277" key="GridCell.Tab.0.bottom" timestamp="1583483805136">
+    <state width="1860" height="277" key="GridCell.Tab.0.bottom" timestamp="1584531521583">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583483805136" />
-    <state width="1860" height="277" key="GridCell.Tab.0.center" timestamp="1583483805136">
+    <state width="1860" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584531521583" />
+    <state width="1860" height="277" key="GridCell.Tab.0.center" timestamp="1584531521582">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583483805136" />
-    <state width="1860" height="277" key="GridCell.Tab.0.left" timestamp="1583483805136">
+    <state width="1860" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584531521582" />
+    <state width="1860" height="277" key="GridCell.Tab.0.left" timestamp="1584531521582">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583483805136" />
-    <state width="1860" height="277" key="GridCell.Tab.0.right" timestamp="1583483805136">
+    <state width="1860" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584531521582" />
+    <state width="1860" height="277" key="GridCell.Tab.0.right" timestamp="1584531521583">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583483805136" />
+    <state width="1860" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584531521583" />
     <state width="1860" height="344" key="GridCell.Tab.1.bottom" timestamp="1583442191658">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -398,10 +400,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="776" y="297" key="chooseDestDirectoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581357112858" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1583481354606">
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1584522981375">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583481354606" />
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584522981375" />
     <state x="864" y="315" key="extract.method.dialog" timestamp="1581411161265">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -418,9 +420,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1581667414811" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1583441774013">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1584530331365">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583441774013" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1584530331365" />
   </component>
 </project>

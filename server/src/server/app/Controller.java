@@ -1,19 +1,17 @@
 package server.app;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
-
+import java.util.Comparator;
+import java.util.List;
 import DatabaseConnector.DatabaseAPI;
 import Utilities.Utils;
-import javafx.application.Platform;
+import filesOperations.FileWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +22,6 @@ import serverRMIDefinitions.*;
 import userPackage.Person;
 import userPackage.Privileges;
 import userPackage.UserCardNumber;
-
 import static Utilities.Utils.showMessage;
 
 public class Controller {
@@ -34,6 +31,7 @@ public class Controller {
 
     private DatabaseAPI connectionToDatabase;
     private ObservableList data;
+    private FileWriter fileWriter;
 
     @FXML
     private TextField txtUsername;
@@ -52,7 +50,7 @@ public class Controller {
 
     // add account to database in server side
     @FXML
-    void btnAddAccountClicked(ActionEvent event) throws IOException {
+    void btnAddAccountClicked(ActionEvent event) throws IOException, RemoteException {
         String username = txtUsername.getText();  // get username from form
         String password = txtPassword.getText(); // get password from form
         Privileges privilege = cmbPrivilege.getValue(); // get privilege from form
@@ -79,44 +77,25 @@ public class Controller {
     }
 
     @FXML
-    void btnOpenByCardClicked( ActionEvent event) throws RemoteException {
-        StringBuilder sb = new StringBuilder();
-        sb.setLength(0);
-        sb.append("Reading data from file sorted by Bank Card Numbers\n");
+    void btnOpenByCardClicked( ActionEvent event) throws IOException, SQLException {
+        List<Person> listOfPersonData = connectionToDatabase.getPeopleDataFromDatabase();
+        List<UserCardNumber> listOfCardNumberData = connectionToDatabase.getUserCardNumberDataFromDatabase();
+        fileWriter = new FileWriter(listOfPersonData,listOfCardNumberData);
+        fileWriter.writeCardDataSortedByFilter(Comparator.comparing(UserCardNumber::getCardNumber));
 
-        File f = new File("sortedByCardNumber.txt");
-
-        try (Scanner scanner = new Scanner(f)) {
-            while (scanner.hasNext()) {
-                sb.append(String.format("%s  %s%n", scanner.next(),scanner.next()));
-            }
-            sb.append(String.format("%s%n","End of file"));
-        } catch (FileNotFoundException e) {
-            showMessage(Alert.AlertType.ERROR, "Table view of file", "No file found.",
-                    "Check file configurations.");
-        }
-        Platform.runLater( ()-> txaLog.setText(sb.toString()));
+        txaLog.setText("Writing in file by sorted card number completed.");
     }
+
 
     // display data for bank cards and their encryption's sorted by encryption's
     @FXML
-    void btnOpenByEncryptionClicked(ActionEvent event) {
-        StringBuilder sb = new StringBuilder();
-        sb.setLength(0);
-        sb.append("Reading data from file sorted by Encryption Card Number\n");
+    void btnOpenByEncryptionClicked(ActionEvent event) throws SQLException {
+        List<Person> listOfPersonData = connectionToDatabase.getPeopleDataFromDatabase();
+        List<UserCardNumber> listOfCardNumberData = connectionToDatabase.getUserCardNumberDataFromDatabase();
+        fileWriter = new FileWriter(listOfPersonData,listOfCardNumberData);
+        fileWriter.writeCardDataSortedByFilter(Comparator.comparing(UserCardNumber::getEncryptionNumber));
 
-        File f = new File("sortedByEncryption.txt");
-
-        try (Scanner scanner = new Scanner(f)) {
-            while (scanner.hasNext()) {
-                sb.append(String.format("%s  %s%n", scanner.next(),scanner.next()));
-            }
-            sb.append(String.format("%s%n","End of file"));
-        } catch (FileNotFoundException e) {
-            showMessage(Alert.AlertType.ERROR, "Table view of file", "No file found.",
-                    "Check file configurations.");
-        }
-        Platform.runLater( ()-> txaLog.setText(sb.toString()));
+        txaLog.setText("Writing in file by sorted encryption number completed.");
     }
     @FXML
     void initialize() throws IOException, NotBoundException, RemoteException, SQLException {

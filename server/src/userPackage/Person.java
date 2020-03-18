@@ -48,4 +48,9 @@ public class Person {
     public void setPrivileges(String privileges) {
         this.privileges.set(privileges);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Username: %-10sPassword:%-10s Privileges:%-10s",getUsername(),getPassword(),getPrivileges());
+    }
 }

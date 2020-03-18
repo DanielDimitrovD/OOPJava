@@ -1,0 +1,4 @@
+Username: daniel     Card Number: 3379513561108795 Encryption Number: 8824068016653240
+Username: daniel     Card Number: 4563960122001999 Encryption Number: 1230637899778666
+Username: Guest      Card Number: 4563960122001999 Encryption Number: 0129526788667555
+Username: gedro      Card Number: 6011456738483344 Encryption Number: 2677012394049900
